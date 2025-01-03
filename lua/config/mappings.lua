@@ -13,6 +13,11 @@ keymap("n", "<leader>fw", ":Telescope live_grep <CR>", opts)
 keymap("n", "<C-s>", ":w<CR>", opts)
 keymap("n", ";", ":", { noremap = true })
 
+----- Buffer manip ----
+keymap("n", "<leader>x", ":bdelete <CR>", opts)
+keymap("n", "<Tab>", ":BufferLineCycleNext <CR>", opts)
+
+
 keymap("n", "<C-h>", "<C-w>h", opts)
 keymap("n", "<C-j>", "<C-w>j", opts)
 keymap("n", "<C-k>", "<C-w>k", opts)

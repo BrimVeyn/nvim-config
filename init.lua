@@ -41,21 +41,15 @@ opt.undofile = true
 -- interval for writing swap file to disk, also used by gitsigns
 opt.updatetime = 250
 
--- go to previous/next line with h,l,left arrow and right arrow
 -- when cursor reaches end/beginning of line
 opt.whichwrap:append "<>[]hl"
 
 g.mapleader = " "
+g.maplocalleader = " "
 
 -------------------------------------- commands ------------------------------------------
-
-require("config.mappings")
-
-require("config.lazy")
-
-require("config.lspconfig")
-require("mason-lspconfig").setup()
-require("mason").setup()
+require("core.init")
 
 vim.cmd("set cursorline")
 vim.cmd("set cursorcolumn")
+vim.cmd[[colorscheme tokyonight-night]]

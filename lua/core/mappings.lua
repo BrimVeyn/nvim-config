@@ -17,10 +17,12 @@ opts.desc = "Classic save"
 keymap("n", "<C-s>", ":w<CR>", opts)
 opts.desc = "Allow ; to act like : to avoid using shift"
 keymap("n", ";", ":", { noremap = true, desc = opts.desc })
+opts.desc = "Clear search highlight"
+keymap("n", "<ESC>", ":nohlsearch<CR>", opts)
 
 ----- Buffer manip ----
 opts.desc = "Delete current buffer"
-keymap("n", "<leader>x", ":confirm bd <CR>", { noremap = true, desc = opts.desc})
+keymap("n", "<leader>x", ":confirm bd <CR>", opts)
 opts.desc = "Go to next tab"
 keymap("n", "<Tab>", ":BufferLineCycleNext <CR>", opts)
 opts.desc = "Go to prev tab"
@@ -29,13 +31,10 @@ keymap("n", "<S-Tab>", ":BufferLineCyclePrev <CR>", opts)
 
 opts.desc = "Move focus left split"
 keymap("n", "<C-h>", "<C-w>h", opts)
-
 opts.desc = "Move focus down split"
 keymap("n", "<C-j>", "<C-w>j", opts)
-
 opts.desc = "Move focus up split"
 keymap("n", "<C-k>", "<C-w>k", opts)
-
 opts.desc = "Move focus right split"
 keymap("n", "<C-l>", "<C-w>l", opts)
 

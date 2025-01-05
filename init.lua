@@ -17,9 +17,8 @@ opt.smartindent = true
 opt.tabstop = 4
 opt.softtabstop = 4
 
--- opt.fillchars = { eob = " " }
--- opt.ignorecase = true
--- opt.smartcase = true
+opt.ignorecase = true
+opt.smartcase = true
 opt.mouse = "a"
 
 -- Numbers
@@ -49,7 +48,3 @@ g.maplocalleader = " "
 
 -------------------------------------- commands ------------------------------------------
 require("core.init")
-
-vim.cmd("set cursorline")
-vim.cmd("set cursorcolumn")
-vim.cmd[[colorscheme tokyonight-night]]

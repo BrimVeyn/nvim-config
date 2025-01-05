@@ -6,12 +6,14 @@ vim.g.maplocalleader = " "
 local opts = { noremap = true, silent = true }
 
 ----------------------- Normal ----------------------
-opts.desc = "Find files in project"
+opts.desc = "Fuzzy find files in project"
 keymap("n", "<leader>ff", ":Telescope find_files<CR>", opts)
-opts.desc = "Fuzzy find in current buffer"
-keymap("n", "<leader>fz", ":Telescope current_buffer_fuzzy_find<CR>", opts)
 opts.desc = "Fuzzy find in project"
 keymap("n", "<leader>fw", ":Telescope live_grep <CR>", opts)
+opts.desc = "Fuzzy find in current buffer"
+keymap("n", "<leader>fz", ":Telescope current_buffer_fuzzy_find<CR>", opts)
+opts.desc = "Fuzzy find TODOs"
+keymap("n", "<leader>td", ":TodoTelescope<CR>", opts)
 
 opts.desc = "Classic save"
 keymap("n", "<C-s>", ":w<CR>", opts)
@@ -24,11 +26,16 @@ keymap("n", "<ESC>", ":nohlsearch<CR>", opts)
 opts.desc = "Open new buffer"
 keymap("n", "<leader>b", ":tabnew<CR>", opts)
 opts.desc = "Close current buffer"
-keymap("n", "<leader>x", ":confirm bd <CR>", opts)
+keymap("n", "<leader>x", ":confirm bd<CR>", opts)
 opts.desc = "Go to next buffer"
-keymap("n", "<Tab>", ":BufferLineCycleNext <CR>", opts)
+keymap("n", "<Tab>", ":BufferLineCycleNext<CR>", opts)
 opts.desc = "Go to prev buffer"
-keymap("n", "<S-Tab>", ":BufferLineCyclePrev <CR>", opts)
+keymap("n", "<S-Tab>", ":BufferLineCyclePrev<CR>", opts)
+opts.desc = "Close all other tabs"
+keymap("n", "<leader>X", ":BufferLineCloseOthers<CR>", opts)
+opts.desc = "Bufferline 'flash'"
+keymap("n", "<leader>bl", ":BufferLinePick<CR>", opts)
+
 
 opts.desc = "Open vertical split"
 keymap("n", "<leader>sv", ":vertical split<CR>", opts)
@@ -59,6 +66,9 @@ opts.desc = "Automatically centers when C-d"
 keymap("n", "<C-d>", "<C-d>zz", opts)
 opts.desc = "Automatically centers when C-u"
 keymap("n", "<C-u>", "<C-u>zz", opts)
+opts.desc = "Center when searching"
+keymap("n", "n", "nzzzv", opts)
+keymap("n", "N", "Nzzzv", opts)
 
 
 ----- File Navigation -----
@@ -93,6 +103,13 @@ keymap("n", "<leader>/", "gcc", { desc = opts.desc } )
 opts.desc = "Toggle comment"
 keymap("v", "<leader>/", "gc", { desc = opts.desc } )
 
+opts.desc = "Indentation plus"
+keymap("v", ">", ">gv", opts)
+opts.desc = "Indentation minus"
+keymap("v", "<", "<gv", opts)
+
+opts.desc = "Keep last yanked when pasting"
+keymap("v", "p", '"_dP', opts)
 
 ----------------------- Plugins ----------------------
 local M = {}
@@ -113,26 +130,35 @@ function M.cmp_native(cmp, luasnip)
 		["<C-e>"]	= cmp.mapping.abort(), -- Close
 		["<C-b>"]	= cmp.mapping.scroll_docs(-4), -- Move docs up
 		["<C-f>"]	= cmp.mapping.scroll_docs(4), -- Move docs down
-		['<CR>'] = cmp.mapping(function(fallback)
-			if cmp.visible() then if luasnip.expandable()
-			then luasnip.expand()
-			else cmp.confirm({ select = true, })
-			end
-			else fallback()
+		['<CR>']	= cmp.mapping(function(fallback)
+			if cmp.visible() then
+				if luasnip.expandable() then
+					luasnip.expand()
+				else
+					cmp.confirm({ select = true, })
+				end
+			else
+				fallback()
 			end
 		end),
 
-		["<Tab>"] = cmp.mapping(function(fallback)
-			if cmp.visible() then cmp.select_next_item()
-			elseif luasnip.locally_jumpable(1) then luasnip.jump(1)
-			else fallback()
+		["<Tab>"]	= cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_next_item()
+			elseif luasnip.locally_jumpable(1) then
+				luasnip.jump(1)
+			else
+				fallback()
 			end
 		end, { "i", "s" }),
 
-		["<S-Tab>"] = cmp.mapping(function(fallback)
-			if cmp.visible() then cmp.select_prev_item()
-			elseif luasnip.locally_jumpable(-1) then luasnip.jump(-1)
-			else fallback()
+		["<S-Tab>"]	= cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_prev_item()
+			elseif luasnip.locally_jumpable(-1) then
+				luasnip.jump(-1)
+			else
+				fallback()
 			end
 		end, { "i", "s" }),
 	}

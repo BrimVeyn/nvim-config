@@ -26,5 +26,14 @@ return {
 				})
 			end,
 		})
+
+		local uname = vim.loop.os_uname()
+
+		if uname.machine == "aarch64" then
+			lspconfig["clangd"].setup({
+				cmd = { "/home/bvan-pae/Downloads/clang+llvm-19.1.0-aarch64-linux-gnu/bin/clangd" },
+				capabilities = capabilities,
+			})
+		end
 	end,
 }

@@ -1,6 +1,6 @@
 return {
 	"hrsh7th/nvim-cmp",
-	event = "InsertEnter",
+	event = { "InsertEnter", "CmdlineEnter" },
 	dependencies = {
 		"hrsh7th/cmp-buffer",
 		"hrsh7th/cmp-path",
@@ -45,13 +45,13 @@ return {
 				end,
 			},
 
-			mapping = cmp.mapping.preset.insert(mappings.cmp_native(cmp)),
+			mapping = cmp.mapping.preset.insert(mappings.cmp_native(cmp, luasnip)),
 
 			sources = cmp.config.sources({
-				{ name = "nvim_lsp" },
-				{ name = "luasnip" },
-				{ name = "buffer" },
-				{ name = "path" },
+				{ name = "nvim_lsp", keyword_length = 3 },
+				{ name = "luasnip", keyword_length = 3 },
+				{ name = "buffer", keyword_length = 3  },
+				{ name = "path", keyword_length = 3  },
 			}),
 
 			formatting = {
@@ -68,15 +68,20 @@ return {
 			view = {
 				entries = {name = 'wildmenu', separator = '|' }
 			},
+			mapping = cmp.mapping.preset.cmdline(),
 			sources = ({
 				{ name = "buffer" },
 			}),
 		})
-		-- load cmdline mappings --
-		mappings.cmp_cmdline(cmp)
 
-
-
+		cmp.setup.cmdline(':', {
+			mapping = cmp.mapping.preset.cmdline(),
+			sources = cmp.config.sources({
+				{ name = 'path' },
+				{ name = 'cmdline' }
+			}),
+			matching = { disallow_symbol_nonprefix_matching = false }
+		})
 
 	end,
 }

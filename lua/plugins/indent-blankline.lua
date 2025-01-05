@@ -1,11 +1,14 @@
 return {
 	"lukas-reineke/indent-blankline.nvim",
 	main = "ibl",
-	event = { "BufReadPre", "BufNewFile" },
+	event = { "BufReadPre", "BufNewFile", "ModeChanged" },
 	config = function()
 		require("ibl").setup({
 			indent = { char = "┆" },
-			scope = { show_start = false },
+			scope = {
+				show_start = false,
+				priority = 500,
+			},
 		})
 	end
 }

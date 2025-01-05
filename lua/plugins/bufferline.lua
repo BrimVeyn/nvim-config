@@ -18,7 +18,8 @@ local function update_mode()
 	local hl_name = hl_name_from_mode(mode)
 	local hl_obj = vim.api.nvim_get_hl(0, { name = hl_name, link = false } )
 	-- print(vim.inspect({mode, hl_name}))
-	vim.api.nvim_set_hl(0, "BufferlineBufferSelected", { fg = hl_obj.fg })
+	vim.api.nvim_set_hl(0, "BufferLineBufferSelected", { fg = hl_obj.fg })
+	vim.api.nvim_set_hl(0, "WinSeparator", { fg = hl_obj.fg })
 end
 
 local function create_autocmd()
@@ -37,9 +38,9 @@ local function create_autocmd()
 end
 
 return {
-	'akinsho/bufferline.nvim',
+	"akinsho/bufferline.nvim",
 	version = "*",
-	dependencies = 'nvim-tree/nvim-web-devicons',
+	dependencies = { "nvim-tree/nvim-web-devicons", },
 	config = function()
 		create_autocmd()
 
@@ -47,6 +48,7 @@ return {
 			options = {
 				themable = true,
 				separator_style = "slope",
+
 			},
 			highlights = {
 				buffer_selected = {

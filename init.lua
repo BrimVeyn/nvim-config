@@ -46,5 +46,21 @@ opt.whichwrap:append "<>[]hl"
 g.mapleader = " "
 g.maplocalleader = " "
 
+vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
+  callback = function()
+    vim.wo.cursorline = true
+    vim.wo.cursorcolumn = true
+  end,
+})
+
+vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave" }, {
+  callback = function()
+    vim.wo.cursorline = false
+    vim.wo.cursorcolumn = false
+  end,
+})
+
 -------------------------------------- commands ------------------------------------------
 require("core.init")
+
+vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#FF0000" })

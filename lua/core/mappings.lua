@@ -15,8 +15,10 @@ keymap("n", "<leader>fz", ":Telescope current_buffer_fuzzy_find<CR>", opts)
 opts.desc = "Fuzzy find TODOs"
 keymap("n", "<leader>td", ":TodoTelescope<CR>", opts)
 
-opts.desc = "Classic save"
-keymap("n", "<C-s>", ":w<CR>", opts)
+-- opts.desc = "Classic save"
+vim.keymap.set("n", "<C-s>", function()
+	vim.cmd("w")
+end, opts)
 opts.desc = "Allow ; to act like : to avoid using shift"
 keymap("n", ";", ":", { noremap = true, desc = opts.desc })
 opts.desc = "Clear search highlight"
@@ -28,14 +30,21 @@ keymap("n", "<leader>b", ":tabnew<CR>", opts)
 opts.desc = "Close current buffer"
 keymap("n", "<leader>x", ":confirm bd<CR>", opts)
 opts.desc = "Go to next buffer"
-keymap("n", "<Tab>", ":BufferLineCycleNext<CR>", opts)
-opts.desc = "Go to prev buffer"
-keymap("n", "<S-Tab>", ":BufferLineCyclePrev<CR>", opts)
+vim.keymap.set("n", "<Tab>", function()
+    require("bufferline").cycle(1)
+end, opts)
+opts.desc = "Go to previous buffer"
+vim.keymap.set("n", "<S-Tab>", function()
+    require("bufferline").cycle(-1)
+end, opts)
 opts.desc = "Close all other tabs"
-keymap("n", "<leader>X", ":BufferLineCloseOthers<CR>", opts)
+vim.keymap.set("n", "<leader>X", function()
+    require("bufferline").close_others()
+end, opts)
 opts.desc = "Bufferline 'flash'"
-keymap("n", "<leader>bl", ":BufferLinePick<CR>", opts)
-
+vim.keymap.set("n", "<leader>bl", function()
+    require("bufferline").pick()
+end, opts)
 
 opts.desc = "Open vertical split"
 keymap("n", "<leader>sv", ":vertical split<CR>", opts)
@@ -43,6 +52,8 @@ opts.desc = "Open horizontal split"
 keymap("n", "<leader>sh", ":horizontal split<CR>", opts)
 opts.desc = "Make splits equal"
 keymap("n", "<leader>s=", "<C-w>=", opts)
+opts.desc = "Close split"
+keymap("n", "<leader>sx", ":close<CR>", opts)
 
 opts.desc = "Move focus left split"
 keymap("n", "<C-h>", "<C-w>h", opts)

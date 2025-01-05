@@ -5,6 +5,8 @@ vim.g.maplocalleader = " "
 
 local opts = { noremap = true, silent = true }
 
+local M = {}
+
 ----- Normal -----
 opts.desc = "Find files in project"
 keymap("n", "<leader>ff", ":Telescope find_files<CR>", opts)
@@ -72,3 +74,35 @@ keymap("i", "<C-h>", "<Left>", opts)
 opts.desc = "Move right"
 keymap("i", "<C-l>", "<Right>", opts)
 
+
+function M.lspconfig(ev)
+	opts = { buffer = ev.buf }
+	vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+	vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+	vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+	vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+	vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+	vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+	vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+end
+
+function M.cmp_native(cmp)
+	return {
+		["<Tab>"]	= cmp.mapping.select_next_item(), -- Previous suggestion
+		["<S-Tab>"] = cmp.mapping.select_prev_item(), -- Next suggestion
+		["<CR>"]	= cmp.mapping.confirm({ select = false }),  -- Confirm
+		["<C-e>"]	= cmp.mapping.abort(), -- Close
+		["<C-b>"]	= cmp.mapping.scroll_docs(-4), -- Move docs up
+		["<C-f>"]	= cmp.mapping.scroll_docs(4), -- Move docs down
+	}
+end
+
+function M.cmp_cmdline(cmp)
+	return {
+		vim.keymap.set("c", "<Tab>", cmp.mapping.select_next_item(), {}),
+		vim.keymap.set("c", "<S-Tab>", cmp.mapping.select_prev_item(), {})
+	}
+end
+
+
+return M

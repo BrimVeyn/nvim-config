@@ -17,11 +17,9 @@ return {
 	},
 	config = function()
 		local cmp = require("cmp")
-
 		local luasnip = require("luasnip")
-
 		local lspkind = require("lspkind")
-
+		local mappings = require("core.mappings")
 		local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 
 		require("luasnip.loaders.from_vscode").lazy_load()
@@ -47,14 +45,7 @@ return {
 				end,
 			},
 
-			mapping = cmp.mapping.preset.insert({
-				["<Tab>"]	= cmp.mapping.select_next_item(), -- Previous suggestion
-				["<S-Tab>"] = cmp.mapping.select_prev_item(), -- Next suggestion
-				["<CR>"]	= cmp.mapping.confirm({ select = false }),  -- Confirm
-				["<C-e>"]	= cmp.mapping.abort(), -- Close
-				["<C-b>"]	= cmp.mapping.scroll_docs(-4), -- Move docs up
-				["<C-f>"]	= cmp.mapping.scroll_docs(4), -- Move docs down
-			}),
+			mapping = cmp.mapping.preset.insert(mappings.cmp_native(cmp)),
 
 			sources = cmp.config.sources({
 				{ name = "nvim_lsp" },
@@ -77,15 +68,15 @@ return {
 			view = {
 				entries = {name = 'wildmenu', separator = '|' }
 			},
-			-- For some reason mapping attriubute doesn't work here so we setup the keybindings manually
-
 			sources = ({
 				{ name = "buffer" },
 			}),
 		})
+		-- load cmdline mappings --
+		mappings.cmp_cmdline(cmp)
 
-		vim.keymap.set("c", "<Tab>", cmp.mapping.select_next_item(), {})
-		vim.keymap.set("c", "<S-Tab>", cmp.mapping.select_prev_item(), {})
+
+
 
 	end,
 }

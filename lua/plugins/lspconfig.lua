@@ -8,24 +8,13 @@ return {
 	},
 	config = function()
 		local lspconfig = require("lspconfig")
-
 		local mason_lspconfig = require("mason-lspconfig")
-
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
-
-		local keymap = vim.keymap
+		local mappings = require("core.mappings")
 
 		vim.api.nvim_create_autocmd("LspAttach",  {
 			group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-			callback = function(ev)
-				local opts = { buffer = ev.buf, silent = true }
-
-				opts.desc = "Show LSP definitions"
-				keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
-
-				opts.desc = "Show documentation for whats under the cursor"
-				keymap.set("n", "K", vim.lsp.buf.hover, opts)
-			end,
+			callback = function(ev) mappings.lspconfig(ev) end,
 		})
 
 		local capabilities = cmp_nvim_lsp.default_capabilities()

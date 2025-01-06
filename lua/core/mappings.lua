@@ -7,53 +7,44 @@ local opts = { noremap = true, silent = true }
 
 ----------------------- Normal ----------------------
 opts.desc = "Fuzzy find files in project"
-keymap("n", "<leader>ff", ":Telescope find_files<CR>", opts)
+vim.keymap.set("n", "<leader>ff", function() vim.cmd("Telescope find_files") end, opts)
 opts.desc = "Fuzzy find in project"
-keymap("n", "<leader>fw", ":Telescope live_grep <CR>", opts)
+vim.keymap.set("n", "<leader>fw", function() vim.cmd("Telescope live_grep") end, opts)
 opts.desc = "Fuzzy find in current buffer"
-keymap("n", "<leader>fz", ":Telescope current_buffer_fuzzy_find<CR>", opts)
+vim.keymap.set("n", "<leader>fz", function() vim.cmd("Telescope current_buffer_fuzzy_find") end, opts)
 opts.desc = "Fuzzy find TODOs"
-keymap("n", "<leader>td", ":TodoTelescope<CR>", opts)
+vim.keymap.set("n", "<leader>td", function() vim.cmd("TodoTelescope") end, opts)
 
--- opts.desc = "Classic save"
-vim.keymap.set("n", "<C-s>", function()
-	vim.cmd("w")
-end, opts)
+opts.desc = "Classic save"
+vim.keymap.set("n", "<C-s>", function() vim.cmd("w") end, opts)
 opts.desc = "Allow ; to act like : to avoid using shift"
 keymap("n", ";", ":", { noremap = true, desc = opts.desc })
 opts.desc = "Clear search highlight"
-keymap("n", "<ESC>", ":nohlsearch<CR>", opts)
+vim.keymap.set("n", "<ESC>", function() vim.cmd("nohlsearch") end, opts)
 
 ----- Buffer manip ----
 opts.desc = "Open new buffer"
-keymap("n", "<leader>b", ":tabnew<CR>", opts)
+vim.keymap.set("n", "<leader>b", function() vim.cmd("tabnew") end, opts)
 opts.desc = "Close current buffer"
-keymap("n", "<leader>x", ":confirm bd<CR>", opts)
+vim.keymap.set("n", "<leader>x", function() vim.cmd("confirm bdelete") end, opts)
 opts.desc = "Go to next buffer"
-vim.keymap.set("n", "<Tab>", function()
-    require("bufferline").cycle(1)
-end, opts)
+vim.keymap.set("n", "<Tab>", function() require("bufferline").cycle(1) end, opts)
 opts.desc = "Go to previous buffer"
-vim.keymap.set("n", "<S-Tab>", function()
-    require("bufferline").cycle(-1)
-end, opts)
+vim.keymap.set("n", "<S-Tab>", function() require("bufferline").cycle(-1) end, opts)
 opts.desc = "Close all other tabs"
-vim.keymap.set("n", "<leader>X", function()
-    require("bufferline").close_others()
-end, opts)
+vim.keymap.set("n", "<leader>X", function() require("bufferline").close_others() end, opts)
 opts.desc = "Bufferline 'flash'"
-vim.keymap.set("n", "<leader>bl", function()
-    require("bufferline").pick()
-end, opts)
+vim.keymap.set("n", "<leader>bl", function() require("bufferline").pick() end, opts)
+vim.keymap.set("n", "<leader>rs", "/\\v<><Left>", { desc = "Select whole word search" })
 
 opts.desc = "Open vertical split"
-keymap("n", "<leader>sv", ":vertical split<CR>", opts)
+vim.keymap.set("n", "<leader>sv", function() vim.cmd("vertical split") end, opts)
 opts.desc = "Open horizontal split"
-keymap("n", "<leader>sh", ":horizontal split<CR>", opts)
+vim.keymap.set("n", "<leader>sh", function() vim.cmd("horizontal split") end, opts)
+opts.desc = "Close split"
+vim.keymap.set("n", "<leader>sx", function() vim.cmd("close") end, opts)
 opts.desc = "Make splits equal"
 keymap("n", "<leader>s=", "<C-w>=", opts)
-opts.desc = "Close split"
-keymap("n", "<leader>sx", ":close<CR>", opts)
 
 opts.desc = "Move focus left split"
 keymap("n", "<C-h>", "<C-w>h", opts)
@@ -65,13 +56,13 @@ opts.desc = "Move focus right split"
 keymap("n", "<C-l>", "<C-w>l", opts)
 
 opts.desc = "Resize up"
-keymap("n", "<C-Up>", ":resize -2<CR>", opts)
+vim.keymap.set("n", "<C-Up>", function() vim.cmd("resize -2") end, opts)
 opts.desc = "Resize down"
-keymap("n", "<C-Down>", ":resize +2<CR>", opts)
+vim.keymap.set("n", "<C-Down>", function() vim.cmd("resize +2") end, opts)
 opts.desc = "Resize left"
-keymap("n", "<C-Left>", ":vertical resize -2<CR>", opts)
+vim.keymap.set("n", "<C-Left>", function() vim.cmd("vertical resize -2") end, opts)
 opts.desc = "Resize right"
-keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
+vim.keymap.set("n", "<C-Right>", function() vim.cmd("vertical resize +2") end, opts)
 
 opts.desc = "Automatically centers when C-d"
 keymap("n", "<C-d>", "<C-d>zz", opts)
@@ -81,12 +72,9 @@ opts.desc = "Center when searching"
 keymap("n", "n", "nzzzv", opts)
 keymap("n", "N", "Nzzzv", opts)
 
-
 ----- File Navigation -----
 opts.desc = "Open Mini Files"
 keymap("n", "<leader>e", ":lua MiniFiles.open()<CR>", opts)
-
---keymap("n", "<leader>n", 
 
 ----------------------- Insert ----------------------
 opts.desc = "Fast exit insert"
@@ -101,9 +89,7 @@ keymap("i", "<C-h>", "<Left>", opts)
 opts.desc = "Move right"
 keymap("i", "<C-l>", "<Right>", opts)
 
-
 ----------------------- Visual ----------------------
-
 opts.desc = "Move selection one line down"
 keymap("v", "J", ":m '>+1<CR>gv=gv", opts)
 opts.desc = "Move selection one line up"

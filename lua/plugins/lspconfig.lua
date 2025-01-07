@@ -5,6 +5,13 @@ return {
 		"hrsh7th/cmp-nvim-lsp",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
 		{ "folke/neodev.nvim", opts = {}, },
+		{ "ray-x/lsp_signature.nvim",
+			event = "VeryLazy",
+			opts = {
+				floating_window = false,
+				hint_prefix = '💡',
+			},
+			config = function(_, opts) require("lsp_signature").setup(opts) end }
 	},
 	config = function()
 		local lspconfig = require("lspconfig")

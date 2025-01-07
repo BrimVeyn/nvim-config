@@ -14,6 +14,8 @@ opts.desc = "Fuzzy find in current buffer"
 vim.keymap.set("n", "<leader>fz", function() vim.cmd("Telescope current_buffer_fuzzy_find") end, opts)
 opts.desc = "Fuzzy find TODOs"
 vim.keymap.set("n", "<leader>td", function() vim.cmd("TodoTelescope") end, opts)
+opts.desc = "Find lsp references"
+vim.keymap.set("n", "<leader>ls", function() vim.cmd("Telescope lsp_references") end, opts)
 
 opts.desc = "Classic save"
 vim.keymap.set("n", "<C-s>", function() vim.cmd("w") end, opts)
@@ -115,6 +117,7 @@ function M.lspconfig(ev)
 	opts = { buffer = ev.buf }
 	vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 	vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
 	vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
 	vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
 	vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)

@@ -8,7 +8,7 @@ end
 local function create_autocmd()
 	local augroup = vim.api.nvim_create_augroup("Namicator", {})
 
-	vim.api.nvim_create_autocmd({ "BufEnter", "ModeChanged" }, {
+	vim.api.nvim_create_autocmd({ "BufEnter", "ModeChanged", "CmdLineEnter" }, {
 		callback = update_hl,
 		group = augroup,
 	})

@@ -12,10 +12,10 @@ opts.desc = "Fuzzy find in project"
 vim.keymap.set("n", "<leader>fw", function() vim.cmd("Telescope live_grep") end, opts)
 opts.desc = "Fuzzy find in current buffer"
 vim.keymap.set("n", "<leader>fz", function() vim.cmd("Telescope current_buffer_fuzzy_find") end, opts)
-opts.desc = "Fuzzy find TODOs"
-vim.keymap.set("n", "<leader>td", function() vim.cmd("TodoTelescope") end, opts)
 opts.desc = "Find lsp references"
-vim.keymap.set("n", "<leader>ls", function() vim.cmd("Telescope lsp_references") end, opts)
+vim.keymap.set("n", "<leader>fr", function() vim.cmd("Telescope lsp_references") end, opts)
+opts.desc = "Fuzzy find TODOs"
+vim.keymap.set("n", "<leader>ft", function() vim.cmd("TodoTelescope") end, opts)
 
 opts.desc = "Classic save"
 vim.keymap.set("n", "<C-s>", function() vim.cmd("w") end, opts)
@@ -23,6 +23,7 @@ opts.desc = "Allow ; to act like : to avoid using shift"
 keymap("n", ";", ":", { noremap = true, desc = opts.desc })
 opts.desc = "Clear search highlight"
 vim.keymap.set("n", "<ESC>", function() vim.cmd("nohlsearch") end, opts)
+
 
 ----- Buffer manip ----
 opts.desc = "Open new buffer"

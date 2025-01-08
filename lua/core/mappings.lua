@@ -27,17 +27,18 @@ vim.keymap.set("n", "<ESC>", function() vim.cmd("nohlsearch") end, opts)
 
 ----- Buffer manip ----
 opts.desc = "Open new buffer"
-vim.keymap.set("n", "<leader>b", function() vim.cmd("tabnew") end, opts)
+vim.keymap.set("n", "<leader>bn", function() vim.cmd("tabnew") end, opts)
 opts.desc = "Close current buffer"
-vim.keymap.set("n", "<leader>x", function() vim.cmd("confirm bdelete") end, opts)
+vim.keymap.set("n", "<Leader>bx", function () require("core.utils").custom_bdelete() end, opts)
+opts.desc = "Close all other tabs"
+vim.keymap.set("n", "<leader>bX", function() require("bufferline").close_others() end, opts)
+opts.desc = "Pick bufferline tabs"
+vim.keymap.set("n", "<leader>bp", function() require("bufferline").pick() end, opts)
 opts.desc = "Go to next buffer"
 vim.keymap.set("n", "<Tab>", function() require("bufferline").cycle(1) end, opts)
 opts.desc = "Go to previous buffer"
 vim.keymap.set("n", "<S-Tab>", function() require("bufferline").cycle(-1) end, opts)
-opts.desc = "Close all other tabs"
-vim.keymap.set("n", "<leader>X", function() require("bufferline").close_others() end, opts)
 opts.desc = "Bufferline 'flash'"
-vim.keymap.set("n", "<leader>bl", function() require("bufferline").pick() end, opts)
 vim.keymap.set("n", "<leader>rs", "/\\v<><Left>", { desc = "Select whole word search" })
 
 opts.desc = "Open vertical split"

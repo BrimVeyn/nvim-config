@@ -24,7 +24,6 @@ keymap("n", ";", ":", { noremap = true, desc = opts.desc })
 opts.desc = "Clear search highlight"
 vim.keymap.set("n", "<ESC>", function() vim.cmd("nohlsearch") end, opts)
 
-
 ----- Buffer manip ----
 opts.desc = "Open new buffer"
 vim.keymap.set("n", "<leader>bn", function() vim.cmd("tabnew") end, opts)
@@ -78,7 +77,7 @@ keymap("n", "N", "Nzzzv", opts)
 
 ----- File Navigation -----
 opts.desc = "Open Mini Files"
-keymap("n", "<leader>e", ":lua MiniFiles.open()<CR>", opts)
+vim.keymap.set("n", "<leader>e", function() require("mini.files").open() end, opts)
 
 ----------------------- Insert ----------------------
 opts.desc = "Fast exit insert"

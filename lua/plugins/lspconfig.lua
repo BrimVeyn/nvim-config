@@ -36,20 +36,20 @@ return {
 
 		local uname = vim.loop.os_uname()
 
+		vim.g.zig_fmt_parse_errors = 0
+		vim.g.zig_fmt_autosave = 0
+
+		vim.api.nvim_create_autocmd('BufWritePre',{
+			pattern = {"*.zig", "*.zon"},
+			callback = function(ev)
+				vim.lsp.buf.format()
+			end
+		})
+
 		if uname.machine == "aarch64" then
 			lspconfig["clangd"].setup({
 				cmd = { "/home/bvan-pae/Downloads/clang+llvm-19.1.0-aarch64-linux-gnu/bin/clangd" },
 				capabilities = capabilities,
-			})
-
-			vim.g.zig_fmt_parse_errors = 0
-			vim.g.zig_fmt_autosave = 0
-
-			vim.api.nvim_create_autocmd('BufWritePre',{
-				pattern = {"*.zig", "*.zon"},
-				callback = function(ev)
-					vim.lsp.buf.format()
-				end
 			})
 
 			lspconfig["zls"].setup({
@@ -57,5 +57,10 @@ return {
 				capabilities = capabilities,
 			})
 		end
+
+		lspconfig["zls"].setup({
+			cmd = { "/home/bvan-pae/Documents/zls/zls" },
+			capabilities = capabilities,
+		})
 	end,
 }

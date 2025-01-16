@@ -27,6 +27,7 @@ return {
 				"gitignore",
 				"vim",
 				"vimdoc",
+				"zig",
 			},
 			incremental_selection = {
 				enable = true,

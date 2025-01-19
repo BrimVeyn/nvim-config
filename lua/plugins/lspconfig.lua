@@ -56,11 +56,12 @@ return {
 				cmd = { "/home/bvan-pae/Downloads/zls/zls" },
 				capabilities = capabilities,
 			})
+		else
+			lspconfig["zls"].setup({
+				cmd = { "/home/bvan-pae/Documents/zls/zls" },
+				capabilities = capabilities,
+			})
 		end
 
-		lspconfig["zls"].setup({
-			cmd = { "/home/bvan-pae/Documents/zls/zls" },
-			capabilities = capabilities,
-		})
 	end,
 }

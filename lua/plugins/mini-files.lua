@@ -13,5 +13,14 @@ return {
 				max_number = 3,
 			},
 		})
+
+		vim.api.nvim_create_autocmd("WinEnter", {
+			callback = function()
+				if vim.bo.filetype == "mini-files" then
+					vim.wo.cursorline = false
+					vim.wo.cursorcolumn = false
+				end
+			end,
+		})
 	end,
 }

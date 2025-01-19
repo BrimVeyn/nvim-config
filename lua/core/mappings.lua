@@ -83,7 +83,11 @@ nvimKeymap("n", "N", "Nzzzv", opts)
 
 ----- File Navigation -----
 opts.desc = "Open Mini Files"
-vimKeymap("n", "<leader>e", function() require("mini.files").open() end, opts)
+vimKeymap("n", "<leader>e", function()
+	require("mini.files").open()
+    vim.wo.cursorline = false
+    vim.wo.cursorcolumn = false
+end, opts)
 
 ----------------------- Insert ----------------------
 opts.desc = "Fast exit insert"

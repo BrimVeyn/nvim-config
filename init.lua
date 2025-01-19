@@ -47,20 +47,20 @@ g.mapleader = " "
 g.maplocalleader = " "
 
 vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
-  callback = function()
-    vim.wo.cursorline = true
-    vim.wo.cursorcolumn = true
-  end,
+	callback = function()
+		if vim.bo.filetype ~= "minifiles" then
+			vim.wo.cursorline = true
+			vim.wo.cursorcolumn = true
+		end
+	end,
 })
 
 vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave" }, {
-  callback = function()
-    vim.wo.cursorline = false
-    vim.wo.cursorcolumn = false
-  end,
+	callback = function()
+		vim.wo.cursorline = false
+		vim.wo.cursorcolumn = false
+	end,
 })
 
 -------------------------------------- commands ------------------------------------------
 require("core.init")
-
-vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#FF0000" })

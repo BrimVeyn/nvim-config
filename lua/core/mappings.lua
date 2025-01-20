@@ -46,6 +46,11 @@ nvimKeymap("n", "<leader>rw",
 	[[:let @/='\<'.expand('<cword>').'\>'<CR>:%s/<C-r>///g<Left><Left>]],
 { desc = "Rename word under cursor"})
 
+vimKeymap("n", "<leader>ih", function()
+	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+end,
+{ desc = "Toggle inlay hints" })
+
 opts.desc = "Open vertical split"
 vimKeymap("n", "<leader>sv", function() vim.cmd("vertical split") end, opts)
 opts.desc = "Open horizontal split"

@@ -49,6 +49,7 @@ function M.custom_bdelete()
 	end
 
 	local num_visible_buffers = vim.tbl_count(visible_buffers)
+	print(vim.inspect(vim.api.nvim_get_current_buf()))
 
 	if num_visible_buffers > 1 then
 		require("bufferline").cycle(1)

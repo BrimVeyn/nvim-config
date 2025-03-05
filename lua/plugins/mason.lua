@@ -13,10 +13,23 @@ return {
 		if uname.machine == "aarch64" then
 			servers = { "lua_ls", "bashls" }
 		else
-			servers =  { "lua_ls", "clangd", "bashls" }
+			servers = {
+				"clangd",
+				"lua_ls",
+				"ts_ls",
+				"bashls",
+				"html",
+				"tailwindcss",
+				"cssls",
+				"jsonls",
+				"bashls",
+				"dockerls",
+				"yamls",
+			}
 		end
 
 		mason_lspconfig.setup({
+			automatic_installation = true,
 			ensure_installed = servers
 		})
 	end,

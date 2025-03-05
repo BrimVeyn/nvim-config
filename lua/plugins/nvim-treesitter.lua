@@ -18,6 +18,7 @@ return {
 			},
 			ensure_installed = {
 				"c",
+				"cpp",
 				"css",
 				"html",
 				"bash",
@@ -28,6 +29,7 @@ return {
 				"vim",
 				"vimdoc",
 				"zig",
+				"yaml",
 			},
 			incremental_selection = {
 				enable = true,

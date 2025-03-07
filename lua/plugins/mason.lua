@@ -24,7 +24,7 @@ return {
 				"jsonls",
 				"bashls",
 				"dockerls",
-				"yamls",
+				"yamlls",
 			}
 		end
 

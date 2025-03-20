@@ -23,6 +23,8 @@ return {
 				"html",
 				"bash",
 				"javascript",
+				"typescript",
+				"tsx",
 				"lua",
 				"dockerfile",
 				"gitignore",

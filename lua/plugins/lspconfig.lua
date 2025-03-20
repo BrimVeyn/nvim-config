@@ -9,8 +9,10 @@ return {
 			event = "VeryLazy",
 			opts = {
 				floating_window = true,
-				hint_enable = false,
-				-- hint_prefix = '💡',
+				toggle_key = '<M-p>',
+				doc_lines = 0,
+				hint_enable = true,
+				hint_prefix = '💡',
 			},
 			config = function(_, opts) require("lsp_signature").setup(opts) end }
 	},

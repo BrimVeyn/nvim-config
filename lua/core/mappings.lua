@@ -7,6 +7,7 @@ vim.g.maplocalleader = " "
 
 local opts = { noremap = true, silent = true }
 
+
 ----------------------- Normal ----------------------
 opts.desc = "Fuzzy find files in project"
 vimKeymap("n", "<leader>ff", function() vim.cmd("Telescope find_files") end, opts)
@@ -18,6 +19,10 @@ opts.desc = "Find lsp references"
 vimKeymap("n", "<leader>fr", function() vim.cmd("Telescope lsp_references") end, opts)
 opts.desc = "Fuzzy find TODOs"
 vimKeymap("n", "<leader>ft", function() vim.cmd("TodoTelescope") end, opts)
+opts.desc = "Find buffers"
+vimKeymap("n", "<leader>fb", function() vim.cmd("Telescope buffers") end, opts)
+opts.desc = "Open NeoTree (floating window)"
+vimKeymap("n", "<leader>fe", function() vim.cmd("Neotree float") end, opts);
 
 opts.desc = "Classic save"
 vimKeymap("n", "<C-s>", function() vim.cmd("w") end, opts)

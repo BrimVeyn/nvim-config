@@ -35,7 +35,7 @@ vimKeymap("n", "<leader>tn", function() vim.cmd("Neotest jump prev") end, opts);
 opts.desc = "Run all tests in current file"
 vimKeymap("n", "<leader>trf", function() vim.cmd("Neotest run file") end, opts);
 opts.desc = "Run closest test"
-vimKeymap("n", "<leader>trf", function() vim.cmd("Neotest run file") end, opts);
+vimKeymap("n", "<leader>trt", function() vim.cmd("Neotest run last") end, opts);
 
 
 opts.desc = "Classic save"

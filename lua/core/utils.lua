@@ -25,7 +25,7 @@ function M.hl_name_from_mode(mode)
 		['R']  = 'ReplaceMode',
 		['c']  = 'CommandMode',
 		['t']  = 'TerminalMode',
-		['nt'] = 'TerminalNormal',
+		['nt'] = 'Terminalnormalmode',
 	}
 	return mode_names[mode] or 'NormalMode'
 end
@@ -33,10 +33,11 @@ end
 function M.get_mode_hl_color(darkening_factor)
 	local mode = vim.api.nvim_get_mode().mode
 	local hl_name = M.hl_name_from_mode(mode)
+	-- vim.inspect(print(mode))
 	local hl_obj = vim.api.nvim_get_hl(0, { name = hl_name, link = false } )
 	local fg_color = nil;
 	-- Back up to white in case nvim_get_hl fails somehow (happens with neotest gui)
-	if hl_obj.fb == nil then
+	if hl_obj.fg == nil then
 		fg_color = "#FFFFFF"
 	else
 		fg_color = string.format("#%06x", hl_obj.fg)

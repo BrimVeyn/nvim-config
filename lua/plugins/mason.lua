@@ -15,6 +15,7 @@ return {
 		else
 			servers = {
 				"clangd",
+				"zls",
 				"lua_ls",
 				"ts_ls",
 				"bashls",

@@ -47,15 +47,6 @@ return {
 				cmd = { "/home/bvan-pae/Downloads/clang+llvm-19.1.0-aarch64-linux-gnu/bin/clangd" },
 				capabilities = capabilities,
 			})
-			lspconfig["zls"].setup({
-				cmd = { "/home/bvan-pae/Downloads/zls/zls" },
-				capabilities = capabilities,
-			})
-		else
-			lspconfig["zls"].setup({
-				cmd = { "/home/brimveyn/apps/zls" },
-				capabilities = capabilities,
-			})
 		end
 
 	end,

@@ -24,6 +24,14 @@ vimKeymap("n", "<leader>fb", function() vim.cmd("Telescope buffers") end, opts)
 opts.desc = "Open NeoTree (floating window)"
 vimKeymap("n", "<leader>fe", function() vim.cmd("Neotree float") end, opts);
 
+opts.desc = "Open Neotest summary window"
+vimKeymap("n", "<leader>ts", function() vim.cmd("Neotest summary") end, opts);
+opts.desc = "Open Neotest output for a specific test"
+vimKeymap("n", "<leader>to", function() vim.cmd("Neotest output") end, opts);
+opts.desc = "Run all tests on current file"
+vimKeymap("n", "<leader>tfr", function() require("neotest").run.run(vim.fn.expand("%")) end, opts);
+
+
 opts.desc = "Classic save"
 vimKeymap("n", "<C-s>", function() vim.cmd("w") end, opts)
 opts.desc = "Allow ; to act like : to avoid using shift"
@@ -163,6 +171,7 @@ function M.wkgroups()
 	wk.add({
 		{"<leader>e", icon = "📁"},
 		{"<leader>f", group = "Find" },
+		{"<leader>t", group = "Test", icon = "🧪" },
 		{"<leader>s", group = "Splits", icon = "✂️"},
 		{"<leader>b", group = "Buffers", icon = "🪟"},
 		{"<leader>r", group = "Search & Replace", icon = "👀"},

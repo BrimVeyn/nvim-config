@@ -33,9 +33,14 @@ vimKeymap("n", "<leader>tn", function() vim.cmd("Neotest jump next") end, opts);
 opts.desc = "Jump to prev test"
 vimKeymap("n", "<leader>tn", function() vim.cmd("Neotest jump prev") end, opts);
 opts.desc = "Run all tests in current file"
-vimKeymap("n", "<leader>trf", function() vim.cmd("Neotest run file") end, opts);
+vimKeymap("n", "<leader>trf", function() require("neotest").run.run(vim.fn.expand("%")) end, opts);
 opts.desc = "Run closest test"
-vimKeymap("n", "<leader>trt", function() vim.cmd("Neotest run last") end, opts);
+vimKeymap("n", "<leader>trt", function() vim.cmd("Neotest run") end, opts);
+
+opts.desc = "Open terminal in vertical split"
+vimKeymap("n", "<leader>cv", function() vim.cmd("vertical split | terminal") end, opts);
+opts.desc = "Open terminal in horizontal split"
+vimKeymap("n", "<leader>ch", function() vim.cmd("horizontal split | terminal") end, opts);
 
 
 opts.desc = "Classic save"

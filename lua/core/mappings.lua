@@ -61,10 +61,17 @@ opts.desc = "Close all buffers to the left"
 vimKeymap("n", "<leader>bcl", function() vim.cmd("BufferLineCloseLeft") end, opts)
 opts.desc = "Close all buffers to the right"
 vimKeymap("n", "<leader>bcr", function() vim.cmd("BufferLineCloseRight") end, opts)
+
 opts.desc = "Close all other buffers"
 vimKeymap("n", "<leader>bX", function() require("bufferline").close_others() end, opts)
 opts.desc = "Close current buffer"
 vimKeymap("n", "<Leader>bx", function () require("core.utils").custom_bdelete() end, opts)
+
+opts.desc = "Move current buffer to the right"
+vimKeymap("n", "<leader>bmr", function() vim.cmd("BufferLineMoveNext") end, opts)
+opts.desc = "Move current buffer to the left"
+vimKeymap("n", "<leader>bml", function() vim.cmd("BufferLineMovePrev") end, opts)
+
 
 vimKeymap("n", "<Tab>", function() require("bufferline").cycle(1) end, opts)
 opts.desc = "Go to previous buffer"

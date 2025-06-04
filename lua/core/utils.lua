@@ -1,3 +1,9 @@
+local bl        =  require("bufferline")
+local bl_pick   =  require("bufferline.pick")
+local bl_cmd    =  require("bufferline.commands")
+local bl_state  =  require("bufferline.state")
+local bl_ui		=  require("bufferline.ui")
+
 local M = {}
 
 function M.darken_color(color, factor)
@@ -62,6 +68,34 @@ function M.custom_bdelete()
 		require("bufferline").cycle(1)
 	end
 	vim.cmd("confirm bdelete " .. curr_buf)
+end
+
+function M.bufferLineMoveTo(id)
+	local current_index, current = bl_cmd.get_current_element_index(bl_state)
+	if current == nil or current_index == nil then return end
+
+	local target_index = nil
+	for i, elem in ipairs(bl_state.components) do
+		if elem ~= nil and elem.id == id then
+			target_index = i
+			break
+		end
+	end
+	if not target_index then return end
+	local direction = target_index > current_index and 1 or -1
+
+	while current_index ~= target_index do
+		if current_index >= #bl_state.components then
+			direction = -1
+		end
+		current_index = current_index + direction
+		bl.move(direction)
+	end
+end
+
+
+function M.bufferLinePickMove()
+	bl_pick.choose_then(M.bufferLineMoveTo)
 end
 
 return M

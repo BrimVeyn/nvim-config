@@ -15,7 +15,7 @@ local function create_autocmd()
 end
 
 return {
-	"akinsho/bufferline.nvim",
+	"BrimVeyn/bufferline.nvim",
 	version = "*",
 	dependencies = { "nvim-tree/nvim-web-devicons", },
 	config = function()

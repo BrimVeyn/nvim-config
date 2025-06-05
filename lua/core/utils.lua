@@ -71,31 +71,34 @@ function M.custom_bdelete()
 end
 
 function M.bufferLineMoveTo(id)
-	local current_index, current = bl_cmd.get_current_element_index(bl_state)
-	if current == nil or current_index == nil then return end
+	local _, current = bl_cmd.get_current_element_index(bl_state)
+	if current == nil then return end
 
-	local target_index = nil
-	for i, elem in ipairs(bl_state.components) do
-		if elem ~= nil and elem.id == id then
-			target_index = i
-			break
-		end
+	local current_ord , target_ord = nil, nil
+
+	for _, elem in ipairs(bl_state.components) do
+		if elem ~= nil and elem.id == id then target_ord = elem.ordinal end
+		if elem ~= nil and elem.id == current.id then current_ord = elem.ordinal end
 	end
-	if not target_index then return end
-	local direction = target_index > current_index and 1 or -1
+	if not target_ord or not current_ord then return end
 
-	while current_index ~= target_index do
-		if current_index >= #bl_state.components then
-			direction = -1
-		end
-		current_index = current_index + direction
+	local direction = target_ord > current_ord and 1 or -1
+
+	while current_ord ~= target_ord do
+		current_ord = current_ord + direction
 		bl.move(direction)
 	end
 end
 
-
 function M.bufferLinePickMove()
 	bl_pick.choose_then(M.bufferLineMoveTo)
+end
+
+function M.bufferLineCloseManyPick()
+	while true do
+		local status = bl.close_with_pick()
+		if status == -1 then break end
+	end
 end
 
 return M

@@ -14,6 +14,9 @@ local bl    = require("bufferline")
 opts.desc = "Pick a buffer to move current buffer next to"
 vimKeymap("n", "<leader>bmp", function() utils.bufferLinePickMove() end, opts)
 
+opts.desc = "Pick many buffers to close (stop with <Escape> or `/`)"
+vimKeymap("n", "<leader>bcp", function() utils.bufferLineCloseManyPick() end, opts)
+
 ----------------------- Normal ----------------------
 opts.desc = "Fuzzy find files in project"
 vimKeymap("n", "<leader>ff", function() vim.cmd("Telescope find_files") end, opts)

@@ -48,20 +48,35 @@ return {
 			mapping = cmp.mapping.preset.insert(mappings.cmp_native(cmp, luasnip)),
 
 			sources = cmp.config.sources({
-				{ name = "nvim_lsp", keyword_length = 2 },
+				{ name = "nvim_lsp", keyword_length = 1 },
 				{ name = "luasnip", keyword_length = 2 },
 				{ name = "buffer", keyword_length = 2  },
 				{ name = "path", keyword_length = 2  },
 			}),
 
 			formatting = {
-				format = lspkind.cmp_format({
-					maxwidth = 50,
-					ellipsis_char = "...",
-				}),
-				expandable_indicator = true,
-			},
+				fields = { "kind", "abbr", "menu" },
 
+				format = function(entry, vim_item)
+					local kind = require("lspkind").cmp_format({
+						mode = "symbol_text",
+					})(entry, vim.deepcopy(vim_item))
+					local highlights_info = require("colorful-menu").cmp_highlights(entry)
+
+					-- highlight_info is nil means we are missing the ts parser, it's
+					-- better to fallback to use default `vim_item.abbr`. What this plugin
+					-- offers is two fields: `vim_item.abbr_hl_group` and `vim_item.abbr`.
+					if highlights_info ~= nil then
+						vim_item.abbr_hl_group = highlights_info.highlights
+						vim_item.abbr = highlights_info.text
+					end
+					local strings = vim.split(kind.kind, "%s", { trimempty = true })
+					vim_item.kind = " " .. (strings[1] or "") .. " "
+					vim_item.menu = ""
+
+					return vim_item
+				end,
+			},
 		})
 
 		cmp.setup.cmdline('/', {

@@ -46,10 +46,16 @@ vimKeymap("n", "<leader>trf", function() require("neotest").run.run(vim.fn.expan
 opts.desc = "Run closest test"
 vimKeymap("n", "<leader>trt", function() vim.cmd("Neotest run") end, opts);
 
-opts.desc = "Open terminal in vertical split"
-vimKeymap("n", "<leader>cv", function() vim.cmd("vertical split | terminal") end, opts);
-opts.desc = "Open terminal in horizontal split"
-vimKeymap("n", "<leader>ch", function() vim.cmd("horizontal split | terminal") end, opts);
+opts.desc = "Open terminal vertical"
+vimKeymap("n", "<leader>cv", function() vim.cmd("ToggleTerm direction=vertical size=100") end, opts);
+opts.desc = "Open terminal horizontal"
+vimKeymap("n", "<leader>ch", function() vim.cmd("ToggleTerm direction=horizontal size=20") end, opts);
+opts.desc = "Open terminal float"
+vimKeymap("n", "<leader>cf", function() vim.cmd("ToggleTerm direction=float") end, opts);
+vimKeymap('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
+vimKeymap('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
+vimKeymap('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
+vimKeymap('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
 
 
 opts.desc = "Classic save"

@@ -179,8 +179,11 @@ nvimKeymap("v", "<", "<gv", opts)
 opts.desc = "Keep last yanked when pasting"
 nvimKeymap("v", "p", '"_dP', opts)
 
----------------Which key groups-----------------------
-
+----------------------- DiffView ----------------------
+opts.desc = "Open diff view for the current project"
+vimKeymap("n", "<leader>dv", function() vim.cmd("DiffviewOpen") end, { desc = opts.desc })
+opts.desc = "Close diff view"
+vimKeymap("n", "<leader>dc", function() vim.cmd("DiffviewClose") end, { desc = opts.desc })
 
 ----------------------- Plugins ----------------------
 local M = {}

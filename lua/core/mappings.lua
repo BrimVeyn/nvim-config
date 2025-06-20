@@ -148,9 +148,6 @@ vimKeymap("n", "<leader>e", function()
 end, opts)
 
 ----------------------- Insert ----------------------
-opts.desc = "Fast exit insert"
-nvimKeymap("i", "jk", "<ESC>", opts)
-
 opts.desc = "Move up"
 nvimKeymap("i", "<C-k>", "<Up>", opts)
 opts.desc = "Move down"

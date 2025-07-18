@@ -25,6 +25,7 @@ return {
 				"javascript",
 				"typescript",
 				"tsx",
+				"ssh_config",
 				"lua",
 				"dockerfile",
 				"gitignore",
@@ -32,6 +33,7 @@ return {
 				"vimdoc",
 				"zig",
 				"yaml",
+				"prisma",
 			},
 			incremental_selection = {
 				enable = true,

@@ -8,6 +8,7 @@ g.toggle_theme_icon = "   "
 opt.laststatus     = 3 -- global statusline
 opt.showmode       = false
 
+
 opt.inccommand     = 'split'
 opt.swapfile       = false
 
@@ -60,6 +61,13 @@ vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave" }, {
 		vim.wo.cursorline = false
 		vim.wo.cursorcolumn = false
 	end,
+})
+
+vim.diagnostic.config({
+	virtual_text = true,
+	virtual_lines = {
+		current_line = true
+	},
 })
 
 require("core.init")

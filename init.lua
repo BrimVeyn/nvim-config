@@ -64,10 +64,13 @@ vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave" }, {
 })
 
 vim.diagnostic.config({
-	virtual_text = true,
-	virtual_lines = {
-		current_line = true
+	virtual_text = {
+		spacing = 4,
+		prefix = "",
 	},
+	signs = true,
+	underline = true,
+	severity_sort = true,
 })
 
 require("core.init")

@@ -10,6 +10,7 @@ return {
 			version = "v2.*",
 			build = "make install_jsregexp",
 		},
+		-- "github/copilot.vim",
 		"saadparwaiz1/cmp_luasnip",
 		"rafamadriz/friendly-snippets",
 		"onsails/lspkind.nvim",
@@ -21,7 +22,6 @@ return {
 		local lspkind = require("lspkind")
 		local mappings = require("core.mappings")
 		local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-
 		require("luasnip.loaders.from_vscode").lazy_load()
 
 		cmp.event:on(
@@ -58,7 +58,7 @@ return {
 				fields = { "kind", "abbr", "menu" },
 
 				format = function(entry, vim_item)
-					local kind = require("lspkind").cmp_format({
+					local kind = lspkind.cmp_format({
 						mode = "symbol_text",
 					})(entry, vim.deepcopy(vim_item))
 					local highlights_info = require("colorful-menu").cmp_highlights(entry)
@@ -95,7 +95,14 @@ return {
 				{ name = 'path' },
 				{ name = 'cmdline' }
 			}),
-			matching = { disallow_symbol_nonprefix_matching = false }
+			matching = {
+				disallow_symbol_nonprefix_matching = false,
+				disallow_fuzzy_matching = true,
+				disallow_fullfuzzy_matching = true,
+				disallow_partial_fuzzy_matching = true,
+				disallow_partial_matching = false,
+				disallow_prefix_unmatching = true,
+			},
 		})
 
 	end,

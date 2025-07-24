@@ -1,6 +1,9 @@
 local opt = vim.opt
 local g   = vim.g
 
+g.mapleader = " "
+g.maplocalleader = "\\"
+
 -------------------------------------- globals -----------------------------------------
 g.toggle_theme_icon = "   "
 
@@ -16,10 +19,10 @@ opt.clipboard      = "unnamedplus"
 
 -- Indenting
 opt.expandtab      = false
-opt.shiftwidth     = 4
+opt.shiftwidth     = 2
 opt.smartindent    = true
-opt.tabstop        = 4
-opt.softtabstop    = 4
+opt.tabstop        = 2
+opt.softtabstop    = 2
 
 opt.ignorecase     = true
 opt.smartcase      = true
@@ -46,22 +49,6 @@ opt.updatetime     = 250
 
 -- when cursor reaches end/beginning of line
 opt.whichwrap:append "<>[]hl"
-
-vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
-	callback = function()
-		if vim.bo.filetype ~= "minifiles" then
-			vim.wo.cursorline = true
-			vim.wo.cursorcolumn = true
-		end
-	end,
-})
-
-vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave" }, {
-	callback = function()
-		vim.wo.cursorline = false
-		vim.wo.cursorcolumn = false
-	end,
-})
 
 vim.diagnostic.config({
 	virtual_text = {

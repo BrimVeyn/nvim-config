@@ -1,14 +1,11 @@
-local keymap = vim.api.nvim_set_keymap
+local keymap     = vim.api.nvim_set_keymap
 local nvimKeymap = vim.api.nvim_set_keymap
-local vimKeymap = vim.keymap.set
+local vimKeymap  = vim.keymap.set
 
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+local opts       = { noremap = true, silent = true }
 
-local opts = { noremap = true, silent = true }
-
-local utils = require("core.utils")
-local bl    = require("bufferline")
+local utils      = require("core.utils")
+local bl         = require("bufferline")
 
 
 opts.desc = "Pick a buffer to move current buffer next to"
@@ -80,7 +77,7 @@ vimKeymap("n", "<leader>bcr", function() vim.cmd("BufferLineCloseRight") end, op
 opts.desc = "Close all other buffers"
 vimKeymap("n", "<leader>bX", function() bl.close_others() end, opts)
 opts.desc = "Close current buffer"
-vimKeymap("n", "<Leader>bx", function () utils.custom_bdelete() end, opts)
+vimKeymap("n", "<Leader>bx", function() utils.custom_bdelete() end, opts)
 
 opts.desc = "Move current buffer to the right"
 vimKeymap("n", "<leader>bmr", function() vim.cmd("BufferLineMoveNext") end, opts)
@@ -93,16 +90,16 @@ opts.desc = "Go to previous buffer"
 vimKeymap("n", "<S-Tab>", function() bl.cycle(-1) end, opts)
 
 opts.desc = "Select word (\\v<..>)"
-vimKeymap("n", "<leader>rs", "/\\v<><Left>", { desc = opts.desc})
+vimKeymap("n", "<leader>rs", "/\\v<><Left>", { desc = opts.desc })
 
 nvimKeymap("n", "<leader>rw",
 	[[:let @/='\<'.expand('<cword>').'\>'<CR>:%s/<C-r>///g<Left><Left>]],
-{ desc = "Rename word under cursor"})
+	{ desc = "Rename word under cursor" })
 
 vimKeymap("n", "<leader>ih", function()
-	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-end,
-{ desc = "Toggle inlay hints" })
+		vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+	end,
+	{ desc = "Toggle inlay hints" })
 
 opts.desc = "Open vertical split"
 vimKeymap("n", "<leader>sv", function() vim.cmd("vertical split") end, opts)
@@ -143,8 +140,8 @@ nvimKeymap("n", "N", "Nzzzv", opts)
 opts.desc = "Open Mini Files"
 vimKeymap("n", "<leader>e", function()
 	require("mini.files").open()
-    vim.wo.cursorline = false
-    vim.wo.cursorcolumn = false
+	vim.wo.cursorline = false
+	vim.wo.cursorcolumn = false
 end, opts)
 
 ----------------------- Insert ----------------------
@@ -164,9 +161,9 @@ opts.desc = "Move selection one line up"
 nvimKeymap("v", "K", ":m '<-2<CR>gv=gv", opts)
 
 opts.desc = "Toggle comment"
-nvimKeymap("n", "<leader>/", "gcc", { desc = opts.desc } )
+nvimKeymap("n", "<leader>/", "gcc", { desc = opts.desc })
 opts.desc = "Toggle comment"
-nvimKeymap("v", "<leader>/", "gc", { desc = opts.desc } )
+nvimKeymap("v", "<leader>/", "gc", { desc = opts.desc })
 
 opts.desc = "Indentation plus"
 nvimKeymap("v", ">", ">gv", opts)
@@ -184,6 +181,34 @@ vimKeymap("n", "<leader>dc", function() vim.cmd("DiffviewClose") end, { desc = o
 
 ----------------------- Plugins ----------------------
 local M = {}
+
+local function switchTabStop()
+	if vim.bo.tabstop == 4 then
+		vim.bo.tabstop = 2
+		vim.bo.shiftwidth = 2
+		vim.bo.softtabstop = 2
+	else
+		vim.bo.tabstop = 4
+		vim.bo.shiftwidth = 4
+		vim.bo.softtabstop = 4
+	end
+end
+
+vimKeymap("n", "<leader>ts", switchTabStop, { desc = "Switch tab stop" })
+
+vimKeymap("n", "<leader>oi",
+	function()
+		if vim.bo.filetype == "typescriptreact" or vim.bo.filetype == "typescript" then
+			vim.cmd("TSToolsOrganizeImports");
+		end
+	end, { desc = "Organize imports" })
+
+vimKeymap("n", "<leader>fa",
+	function()
+		if vim.bo.filetype == "typescriptreact" or vim.bo.filetype == "typescript" then
+			vim.cmd("TSToolsFixAll");
+		end
+	end, { desc = "Fix all auto-fixable problems" })
 
 function M.lspconfig(ev)
 	opts = { buffer = ev.buf }
@@ -209,24 +234,24 @@ function M.wkgroups()
 	local wk = require("which-key")
 
 	wk.add({
-		{"<leader>e", icon = "📁"},
-		{"<leader>f", group = "Find" },
-		{"<leader>t", group = "Test", icon = "🧪" },
-		{"<leader>s", group = "Splits", icon = "✂️"},
-		{"<leader>b", group = "Buffers", icon = "🪟"},
-		{"<leader>r", group = "Search & Replace", icon = "👀"},
-		{"<leader>x", group = "Diagnostics", icon = "🛠️"},
-		{"<leader>n", group = "SwapNext", icon = "⇄"},
-		{"<leader>p", group = "SwapPrev", icon = "⇄"},
+		{ "<leader>e", icon = "📁" },
+		{ "<leader>f", group = "Find" },
+		{ "<leader>t", group = "Test", icon = "🧪" },
+		{ "<leader>s", group = "Splits", icon = "✂️" },
+		{ "<leader>b", group = "Buffers", icon = "🪟" },
+		{ "<leader>r", group = "Search & Replace", icon = "👀" },
+		{ "<leader>x", group = "Diagnostics", icon = "🛠️" },
+		{ "<leader>n", group = "SwapNext", icon = "⇄" },
+		{ "<leader>p", group = "SwapPrev", icon = "⇄" },
 	})
 end
 
 function M.cmp_native(cmp, luasnip)
 	return {
-		["<C-e>"]	= cmp.mapping.abort(), -- Close
-		["<C-b>"]	= cmp.mapping.scroll_docs(-4), -- Move docs up
-		["<C-f>"]	= cmp.mapping.scroll_docs(4), -- Move docs down
-		['<CR>']	= cmp.mapping(function(fallback)
+		["<C-e>"] = cmp.mapping.abort(),       -- Close
+		["<C-b>"] = cmp.mapping.scroll_docs(-4), -- Move docs up
+		["<C-f>"] = cmp.mapping.scroll_docs(4), -- Move docs down
+		['<CR>'] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				if luasnip.expandable() then
 					luasnip.expand()
@@ -238,7 +263,7 @@ function M.cmp_native(cmp, luasnip)
 			end
 		end),
 
-		["<Tab>"]	= cmp.mapping(function(fallback)
+		["<Tab>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_next_item()
 			elseif luasnip.locally_jumpable(1) then
@@ -248,7 +273,7 @@ function M.cmp_native(cmp, luasnip)
 			end
 		end, { "i", "s" }),
 
-		["<S-Tab>"]	= cmp.mapping(function(fallback)
+		["<S-Tab>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_prev_item()
 			elseif luasnip.locally_jumpable(-1) then

@@ -37,6 +37,7 @@ return {
 			end,
 		})
 
+
 		local uname = vim.loop.os_uname()
 
 		vim.g.zig_fmt_parse_errors = 0

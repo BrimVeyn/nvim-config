@@ -6,34 +6,6 @@ return {
 		},
 		config = function()
 			require("mason").setup()
-
-			local mason_lspconfig = require("mason-lspconfig")
-			local uname = vim.loop.os_uname()
-			local servers
-
-			if uname.machine == "aarch64" then
-				servers = { "lua_ls", "bashls" }
-			else
-				servers = {
-					"clangd",
-					"zls",
-					"lua_ls",
-					"ts_ls",
-					"bashls",
-					"html",
-					"tailwindcss",
-					"cssls",
-					"jsonls",
-					"bashls",
-					"dockerls",
-					"yamlls",
-				}
-			end
-
-			mason_lspconfig.setup({
-				automatic_installation = true,
-				ensure_installed = servers
-			})
 		end,
 	},
 	{
@@ -54,7 +26,13 @@ return {
 					-- Conform will run multiple formatters sequentially
 					python = { "isort", "black" },
 					-- Conform will run the first available formatter
-					javascript = { "prettierd", "prettier", stop_after_first = true },
+					javascript = { "prettier", stop_after_first = true },
+					typescript = { "prettier", stop_after_first = true },
+					typescriptreact = { "prettier", stop_after_first = true },
+					javascriptreact = { "prettier", stop_after_first = true },
+					json = { "prettier", stop_after_first = true },
+					graphql = { "prettier", stop_after_first = true },
+					prisma = { lsp_format = "never" },
 				},
 				format_on_save = function()
 					return { timeout_ms = 3000, lsp_fallback = true }
@@ -65,5 +43,17 @@ return {
 	{
 		"j-hui/fidget.nvim",
 		opts = {},
+	},
+	{
+		"windwp/nvim-ts-autotag",
+		config = function()
+			require('nvim-ts-autotag').setup({
+				opts = {
+					enable_close = true,     -- Auto close tags
+					enable_rename = true,    -- Auto rename pairs of tags
+					enable_close_on_slash = false -- Auto close on trailing </
+				},
+			})
+		end,
 	}
 }

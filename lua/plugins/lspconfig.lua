@@ -3,9 +3,11 @@ return {
 	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
+		"artemave/workspace-diagnostics.nvim",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
-		{ "folke/neodev.nvim", opts = {}, },
-		{ "ray-x/lsp_signature.nvim",
+		{ "folke/neodev.nvim",                   opts = {}, },
+		{
+			"ray-x/lsp_signature.nvim",
 			event = "VeryLazy",
 			opts = {
 				floating_window = true,
@@ -14,7 +16,8 @@ return {
 				hint_enable = true,
 				hint_prefix = '💡',
 			},
-			config = function(_, opts) require("lsp_signature").setup(opts) end }
+			config = function(_, opts) require("lsp_signature").setup(opts) end
+		}
 	},
 	config = function()
 		local lspconfig = require("lspconfig")
@@ -22,12 +25,46 @@ return {
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 		local mappings = require("core.mappings")
 
-		vim.api.nvim_create_autocmd("LspAttach",  {
+		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-			callback = function(ev) mappings.lspconfig(ev) end,
+			callback = function(ev)
+				mappings.lspconfig(ev)
+			end,
 		})
 
 		local capabilities = cmp_nvim_lsp.default_capabilities()
+
+		-- Setup mason-lspconfig
+		local uname = vim.loop.os_uname()
+		local servers
+
+		if uname.machine == "aarch64" then
+			servers = { "lua_ls", "bashls" }
+		else
+			servers = {
+				"clangd",
+				"zls",
+				"lua_ls",
+				"bashls",
+				"html",
+				"tailwindcss",
+				"cssls",
+				"jsonls",
+				"bashls",
+				"dockerls",
+				"yamlls",
+				-- "prettier",
+				-- "prettierd",
+				"eslint",
+				-- "eslint_d",
+				"prismals",
+			}
+		end
+
+		mason_lspconfig.setup({
+			automatic_installation = true,
+			ensure_installed = servers
+		})
 
 		mason_lspconfig.setup_handlers({
 			function(server_name)
@@ -36,9 +73,6 @@ return {
 				})
 			end,
 		})
-
-
-		local uname = vim.loop.os_uname()
 
 		vim.g.zig_fmt_parse_errors = 0
 		vim.g.zig_fmt_autosave = 0
@@ -49,6 +83,5 @@ return {
 				capabilities = capabilities,
 			})
 		end
-
 	end,
 }

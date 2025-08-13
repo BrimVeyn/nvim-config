@@ -196,6 +196,13 @@ end
 
 vimKeymap("n", "<leader>ts", switchTabStop, { desc = "Switch tab stop" })
 
+vimKeymap("n", "<leader>ai",
+	function()
+		if vim.bo.filetype == "typescriptreact" or vim.bo.filetype == "typescript" then
+			vim.cmd("TSToolsAddMissingImports");
+		end
+	end, { desc = "Add missing imports" })
+
 vimKeymap("n", "<leader>oi",
 	function()
 		if vim.bo.filetype == "typescriptreact" or vim.bo.filetype == "typescript" then
@@ -207,6 +214,8 @@ vimKeymap("n", "<leader>fa",
 	function()
 		if vim.bo.filetype == "typescriptreact" or vim.bo.filetype == "typescript" then
 			vim.cmd("TSToolsFixAll");
+			vim.wait(100);
+			vim.cmd("EslintFixAll");
 		end
 	end, { desc = "Fix all auto-fixable problems" })
 

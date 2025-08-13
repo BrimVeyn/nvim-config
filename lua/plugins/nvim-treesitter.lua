@@ -26,6 +26,7 @@ return {
 				"typescript",
 				"tsx",
 				"ssh_config",
+				"prisma",
 				"lua",
 				"dockerfile",
 				"gitignore",

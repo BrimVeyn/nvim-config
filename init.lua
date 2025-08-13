@@ -1,15 +1,15 @@
-local opt = vim.opt
-local g   = vim.g
+local opt           = vim.opt
+local g             = vim.g
 
-g.mapleader = " "
-g.maplocalleader = "\\"
+g.mapleader         = " "
+g.maplocalleader    = "\\"
 
 -------------------------------------- globals -----------------------------------------
 g.toggle_theme_icon = "   "
 
 -------------------------------------- options ------------------------------------------
-opt.laststatus     = 3 -- global statusline
-opt.showmode       = false
+opt.laststatus      = 3 -- global statusline
+opt.showmode        = false
 
 
 opt.inccommand     = 'split'
@@ -37,15 +37,15 @@ opt.ruler          = false
 -- disable nvim intro
 opt.shortmess:append "sI"
 
-opt.signcolumn     = "yes"
-opt.splitbelow     = true
-opt.splitright     = true
-opt.termguicolors  = true
-opt.timeoutlen     = 400
-opt.undofile       = true
+opt.signcolumn    = "yes"
+opt.splitbelow    = true
+opt.splitright    = true
+opt.termguicolors = true
+opt.timeoutlen    = 400
+opt.undofile      = true
 
 -- interval for writing swap file to disk, also used by gitsigns
-opt.updatetime     = 250
+opt.updatetime    = 250
 
 -- when cursor reaches end/beginning of line
 opt.whichwrap:append "<>[]hl"

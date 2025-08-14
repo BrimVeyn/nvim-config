@@ -27,10 +27,11 @@ return {
 				separator_style = "slope",
 				diagnostics = 'nvim_lsp',
 				diagnostics_indicator = function(count, level, diagnostics_dict, context)
+					_ = context
+					_ = diagnostics_dict
 					local icon = level:match("error") and " " or " "
 					return " " .. icon .. count
 				end,
-				diagnostics_update_in_insert = true,
 				truncate_names = false,
 			},
 			highlights = {

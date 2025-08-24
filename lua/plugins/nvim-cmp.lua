@@ -49,9 +49,9 @@ return {
 
 			sources = cmp.config.sources({
 				{ name = "nvim_lsp", keyword_length = 1 },
-				{ name = "luasnip", keyword_length = 2 },
-				{ name = "buffer", keyword_length = 2  },
-				{ name = "path", keyword_length = 2  },
+				{ name = "luasnip",  keyword_length = 2 },
+				{ name = "buffer",   keyword_length = 2 },
+				{ name = "path",     keyword_length = 2 },
 			}),
 
 			formatting = {
@@ -81,7 +81,7 @@ return {
 
 		cmp.setup.cmdline('/', {
 			view = {
-				entries = {name = 'wildmenu', separator = '|' }
+				entries = { name = 'wildmenu', separator = '|' }
 			},
 			mapping = cmp.mapping.preset.cmdline(),
 			sources = ({
@@ -104,6 +104,5 @@ return {
 				disallow_prefix_unmatching = true,
 			},
 		})
-
 	end,
 }

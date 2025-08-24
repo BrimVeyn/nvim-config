@@ -25,7 +25,6 @@ return {
 			-- it can't be changed dynamically, so set it to a reasonable value
 			tsserver_max_memory = "auto",
 			-- described below
-			tsserver_file_preferences = {},
 			tsserver_inlay_hints = {
 				includeInlayParameterNameHints = "none",
 				includeInlayParameterNameHintsWhenArgumentMatchesName = false,
@@ -37,4 +36,4 @@ return {
 			},
 		},
 	},
-} 
+}

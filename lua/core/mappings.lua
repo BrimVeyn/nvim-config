@@ -1,4 +1,3 @@
-local keymap     = vim.api.nvim_set_keymap
 local nvimKeymap = vim.api.nvim_set_keymap
 local vimKeymap  = vim.keymap.set
 
@@ -7,28 +6,13 @@ local opts       = { noremap = true, silent = true }
 local utils      = require("core.utils")
 local bl         = require("bufferline")
 
-
-opts.desc = "Pick a buffer to move current buffer next to"
+opts.desc        = "Pick a buffer to move current buffer next to"
 vimKeymap("n", "<leader>bmp", function() utils.bufferLinePickMove() end, opts)
 
 opts.desc = "Pick many buffers to close (stop with <Escape> or `/`)"
 vimKeymap("n", "<leader>bcp", function() utils.bufferLineCloseManyPick() end, opts)
-
 ----------------------- Normal ----------------------
-opts.desc = "Fuzzy find files in project"
-vimKeymap("n", "<leader>ff", function() vim.cmd("Telescope find_files") end, opts)
-opts.desc = "Fuzzy find in project"
-vimKeymap("n", "<leader>fw", function() vim.cmd("Telescope live_grep") end, opts)
-opts.desc = "Fuzzy find in current buffer"
-vimKeymap("n", "<leader>fz", function() vim.cmd("Telescope current_buffer_fuzzy_find") end, opts)
-opts.desc = "Find lsp references"
-vimKeymap("n", "<leader>fr", function() vim.cmd("Telescope lsp_references") end, opts)
-opts.desc = "Fuzzy find TODOs"
-vimKeymap("n", "<leader>ft", function() vim.cmd("TodoTelescope") end, opts)
-opts.desc = "Find buffers"
-vimKeymap("n", "<leader>fb", function() vim.cmd("Telescope buffers") end, opts)
-opts.desc = "Open NeoTree (floating window)"
-vimKeymap("n", "<leader>fe", function() vim.cmd("Neotree float") end, opts);
+---
 
 opts.desc = "Open Neotest summary window"
 vimKeymap("n", "<leader>ts", function() vim.cmd("Neotest summary") end, opts);
@@ -49,6 +33,7 @@ opts.desc = "Open terminal horizontal"
 vimKeymap("n", "<leader>ch", function() vim.cmd("ToggleTerm direction=horizontal size=20") end, opts);
 opts.desc = "Open terminal float"
 vimKeymap("n", "<leader>cf", function() vim.cmd("ToggleTerm direction=float") end, opts);
+
 vimKeymap('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
 vimKeymap('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
 vimKeymap('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
@@ -57,8 +42,6 @@ vimKeymap('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
 
 opts.desc = "Classic save"
 vimKeymap("n", "<C-s>", function() vim.cmd("w") end, opts)
-opts.desc = "Allow ; to act like : to avoid using shift"
-keymap("n", ";", ":", { noremap = true, desc = opts.desc })
 opts.desc = "Clear search highlight"
 vimKeymap("n", "<ESC>", function() vim.cmd("nohlsearch") end, opts)
 
@@ -77,7 +60,20 @@ vimKeymap("n", "<leader>bcr", function() vim.cmd("BufferLineCloseRight") end, op
 opts.desc = "Close all other buffers"
 vimKeymap("n", "<leader>bX", function() bl.close_others() end, opts)
 opts.desc = "Close current buffer"
-vimKeymap("n", "<Leader>bx", function() utils.custom_bdelete() end, opts)
+vimKeymap("n", "<leader>bx", function() utils.custom_bdelete() end, opts)
+opts.desc = "Close current buffer"
+vimKeymap("n", "<localleader>w", function() utils.custom_bdelete() end, opts)
+
+opts.desc = "View diff hunk"
+vimKeymap("n", "<localleader>h", function() vim.cmd("Gitsigns preview_hunk_inline") end, opts)
+opts.desc = "Toggle line blame"
+vimKeymap("n", "<localleader>b", function() vim.cmd("Gitsigns toggle_current_line_blame") end, opts)
+
+opts.desc = "Toggle deleted"
+vimKeymap("n", "<localleader>d", function()
+	vim.cmd("Gitsigns toggle_deleted")
+	vim.cmd("Gitsigns toggle_linehl")
+end, opts)
 
 opts.desc = "Move current buffer to the right"
 vimKeymap("n", "<leader>bmr", function() vim.cmd("BufferLineMoveNext") end, opts)
@@ -98,17 +94,20 @@ nvimKeymap("n", "<leader>rw",
 
 vimKeymap("n", "<leader>ih", function()
 		vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+		vim.notify("Inlay hints " .. (vim.lsp.inlay_hint.is_enabled() and "enabled" or "disabled"))
 	end,
 	{ desc = "Toggle inlay hints" })
 
+
 opts.desc = "Open vertical split"
-vimKeymap("n", "<leader>sv", function() vim.cmd("vertical split") end, opts)
+vim.keymap.set("n", "<leader>sv", function() vim.cmd("vertical split") end, opts)
 opts.desc = "Open horizontal split"
-vimKeymap("n", "<leader>sh", function() vim.cmd("horizontal split") end, opts)
+vim.keymap.set("n", "<leader>sh", function() vim.cmd("horizontal split") end, opts)
 opts.desc = "Close split"
-vimKeymap("n", "<leader>sx", function() vim.cmd("close") end, opts)
+vim.keymap.set("n", "<leader>sx", function() vim.cmd("close") end, opts)
 opts.desc = "Make splits equal"
-nvimKeymap("n", "<leader>s=", "<C-w>=", opts)
+vim.keymap.set("n", "<leader>s=", "<C-w>=", opts)
+
 
 opts.desc = "Move focus left split"
 nvimKeymap("n", "<C-h>", "<C-w>h", opts)
@@ -132,6 +131,13 @@ opts.desc = "Automatically centers when C-d"
 nvimKeymap("n", "<C-d>", "<C-d>zz", opts)
 opts.desc = "Automatically centers when C-u"
 nvimKeymap("n", "<C-u>", "<C-u>zz", opts)
+
+opts.desc = "Cursor follows downscoll"
+vim.keymap.set("n", "<C-e>", "<C-e>j", opts)
+opts.desc = "Cursor follows upscoll"
+vim.keymap.set("n", "<C-y>", "<C-y>k", opts)
+
+
 opts.desc = "Center when searching"
 nvimKeymap("n", "n", "nzzzv", opts)
 nvimKeymap("n", "N", "Nzzzv", opts)
@@ -219,24 +225,24 @@ vimKeymap("n", "<leader>fa",
 		end
 	end, { desc = "Fix all auto-fixable problems" })
 
+
+
 function M.lspconfig(ev)
 	opts = { buffer = ev.buf }
-	opts.desc = "LSP floating documentation"
-	vimKeymap("n", "K", vim.lsp.buf.hover, opts)
-	opts.desc = "LSP goto definition"
-	vimKeymap("n", "gd", vim.lsp.buf.definition, opts)
+	-- opts.desc = "LSP goto definition"
+	-- vimKeymap("n", "gd", vim.lsp.buf.definition, opts)
 	opts.desc = "LSP goto declaration"
 	vimKeymap("n", "gD", vim.lsp.buf.declaration, opts)
 	opts.desc = "LSP goto implementation"
 	vimKeymap("n", "gi", vim.lsp.buf.implementation, opts)
 	opts.desc = "LSP rename word under cursor"
 	vimKeymap("n", "<leader>rn", vim.lsp.buf.rename, opts)
-	opts.desc = "LSP CodeAction"
-	vimKeymap("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-	opts.desc = "LSP diagnostic prev"
-	vimKeymap("n", "[d", vim.diagnostic.goto_prev, opts)
-	opts.desc = "LSP diagnostic next"
-	vimKeymap("n", "]d", vim.diagnostic.goto_next, opts)
+	-- opts.desc = "LSP CodeAction"
+	-- vimKeymap("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+	-- opts.desc = "LSP diagnostic prev"
+	-- vimKeymap("n", "[d", vim.diagnostic.goto_prev, opts)
+	-- opts.desc = "LSP diagnostic next"
+	-- vimKeymap("n", "]d", vim.diagnostic.goto_next, opts)
 end
 
 function M.wkgroups()

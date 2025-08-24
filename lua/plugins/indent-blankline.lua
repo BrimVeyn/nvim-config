@@ -13,7 +13,7 @@ return {
 
 		local config = {
 			indent = {
-				char = "┆",
+				char = "▏",
 			},
 			scope = {
 				priority = 500,

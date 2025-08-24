@@ -1,10 +1,9 @@
-local bl        =  require("bufferline")
-local bl_pick   =  require("bufferline.pick")
-local bl_cmd    =  require("bufferline.commands")
-local bl_state  =  require("bufferline.state")
-local bl_ui		=  require("bufferline.ui")
+local bl       = require("bufferline")
+local bl_pick  = require("bufferline.pick")
+local bl_cmd   = require("bufferline.commands")
+local bl_state = require("bufferline.state")
 
-local M = {}
+local M        = {}
 
 function M.darken_color(color, factor)
 	-- Split the hex color into RGB components
@@ -40,7 +39,7 @@ function M.get_mode_hl_color(darkening_factor)
 	local mode = vim.api.nvim_get_mode().mode
 	local hl_name = M.hl_name_from_mode(mode)
 	-- vim.inspect(print(mode))
-	local hl_obj = vim.api.nvim_get_hl(0, { name = hl_name, link = false } )
+	local hl_obj = vim.api.nvim_get_hl(0, { name = hl_name, link = false })
 	local fg_color = nil;
 	-- Back up to white in case nvim_get_hl fails somehow (happens with neotest gui)
 	if hl_obj.fg == nil then
@@ -62,7 +61,7 @@ function M.custom_bdelete()
 	end
 
 	local num_visible_buffers = vim.tbl_count(visible_buffers)
-	print(vim.inspect(vim.api.nvim_get_current_buf()))
+	-- print(vim.inspect(vim.api.nvim_get_current_buf()))
 
 	if num_visible_buffers > 1 then
 		require("bufferline").cycle(1)
@@ -74,7 +73,7 @@ function M.bufferLineMoveTo(id)
 	local _, current = bl_cmd.get_current_element_index(bl_state)
 	if current == nil then return end
 
-	local current_ord , target_ord = nil, nil
+	local current_ord, target_ord = nil, nil
 
 	for _, elem in ipairs(bl_state.components) do
 		if elem ~= nil and elem.id == id then target_ord = elem.ordinal end

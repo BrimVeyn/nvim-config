@@ -2,7 +2,7 @@ local opt           = vim.opt
 local g             = vim.g
 
 g.mapleader         = " "
-g.maplocalleader    = "\\"
+g.maplocalleader    = ";"
 
 -------------------------------------- globals -----------------------------------------
 g.toggle_theme_icon = "   "
@@ -41,7 +41,7 @@ opt.signcolumn    = "yes"
 opt.splitbelow    = true
 opt.splitright    = true
 opt.termguicolors = true
-opt.timeoutlen    = 400
+opt.timeoutlen    = 200
 opt.undofile      = true
 
 -- interval for writing swap file to disk, also used by gitsigns

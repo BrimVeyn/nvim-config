@@ -45,15 +45,6 @@ return {
 					map_split(buf_id, '<C-v>', 'belowright vertical')
 				end,
 			})
-
-			vim.api.nvim_create_autocmd("WinEnter", {
-				callback = function()
-					if vim.bo.filetype == "mini-files" then
-						vim.wo.cursorline = false
-						vim.wo.cursorcolumn = false
-					end
-				end,
-			})
 		end,
 	},
 	{
@@ -62,5 +53,5 @@ return {
 		config = function()
 			require('mini.align').setup()
 		end
-	}
+	},
 }

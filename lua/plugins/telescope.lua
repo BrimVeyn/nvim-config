@@ -15,8 +15,6 @@ return {
 		},
 
 		config = function()
-			local actions = require("telescope.actions")
-			local action_state = require("telescope.actions.state")
 			local git_root_cache = { git_root = "", cwd = vim.fn.getcwd() }
 
 			require('telescope').setup {
@@ -81,28 +79,9 @@ return {
 					},
 					mappings = {
 						i = {
-							["<C-e>"] = function(prompt_bufnr)
-								local entry = action_state.get_selected_entry()
-								actions.close(prompt_bufnr)
-
-								if entry and entry.path then
-									MiniFiles.open(entry.path, false)
-								end
-							end,
 							["<C-k>"] = require('telescope.actions').cycle_history_next,
 							["<C-j>"] = require('telescope.actions').cycle_history_prev,
 						},
-						n = {
-							["d"] = require('telescope.actions').delete_buffer,
-							["<C-e>"] = function(prompt_bufnr)
-								local entry = action_state.get_selected_entry()
-								actions.close(prompt_bufnr)
-
-								if entry and entry.path then
-									MiniFiles.open(entry.path, false)
-								end
-							end
-						}
 					}
 				},
 				extensions = {
@@ -132,42 +111,8 @@ return {
 				}))
 			end, { noremap = true, silent = true })
 
-			vim.keymap.set("n", "<Leader>ff", function()
-				require("telescope").extensions.frecency.frecency(themes.get_ivy({
-					workspace = "CWD",
-				}))
-			end, { desc = "Telescope frecency" })
-
-			vim.keymap.set("n", "<leader>fk", function()
-				require("telescope.builtin").keymaps(themes.get_ivy())
-			end, { desc = "Telescope keymaps" })
-
-
-			opts.desc = "Fuzzy help tags"
-			vim.keymap.set("n", "<leader>fh", function() vim.cmd("Telescope help_tags") end, opts)
-
-			opts.desc = "Fuzzy find in project"
-			vim.keymap.set("n", "<leader>fw", function() vim.cmd("Telescope live_grep") end, opts)
-
-			opts.desc = "Fuzzy find in current buffer"
-			vim.keymap.set("n", "<leader>fz", function() vim.cmd("Telescope current_buffer_fuzzy_find") end, opts)
-
-			opts.desc = "Find lsp references"
-			vim.keymap.set("n", "<leader>fr", function() vim.cmd("Telescope lsp_references") end, opts)
-
-			opts.desc = "Fuzzy find TODOs"
-			vim.keymap.set("n", "<leader>ft", function() vim.cmd("TodoTelescope") end, opts)
-
 			opts.desc = "Fuzzy find document symbols (LSP)"
 			vim.keymap.set("n", "<leader>fd", function() vim.cmd("Telescope lsp_document_symbols") end, opts)
-
-			opts.desc = "Fuzzy find buffers"
-			vim.keymap.set("n", "<leader>fb", function()
-				require('telescope.builtin').buffers(themes.get_ivy({
-					initial_mode = "normal",
-					sort_mru = true,
-				}))
-			end, opts)
 		end,
 	},
 }

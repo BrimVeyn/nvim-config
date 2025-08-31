@@ -11,7 +11,7 @@ return {
 	},
 	keys = {
 		-- Will use Telescope if installed or a vim.ui.select picker otherwise
-		{ "<leader>fs", "<cmd>SessionSearch<CR>", desc = "Session search" },
-		{ "<leader>ss", "<cmd>SessionSave<CR>",   desc = "Save session" },
+		-- { "<leader>fs", "<cmd>SessionSearch<CR>", desc = "Session search" },
+		-- { "<leader>ss", "<cmd>SessionSave<CR>",   desc = "Save session" },
 	},
 }

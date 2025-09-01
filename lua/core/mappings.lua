@@ -59,8 +59,7 @@ vimKeymap("n", "<leader>bcr", function() vim.cmd("BufferLineCloseRight") end, op
 
 opts.desc = "Close all other buffers"
 vimKeymap("n", "<leader>bX", function() bl.close_others() end, opts)
-opts.desc = "Close current buffer"
-vimKeymap("n", "<leader>bx", function() utils.custom_bdelete() end, opts)
+
 opts.desc = "Close current buffer"
 vimKeymap("n", "<localleader>w", function() utils.custom_bdelete() end, opts)
 
@@ -88,6 +87,15 @@ vimKeymap("n", "<S-Tab>", function() bl.cycle(-1) end, opts)
 opts.desc = "Select word (\\v<..>)"
 vimKeymap("n", "<leader>rs", "/\\v<><Left>", { desc = opts.desc })
 
+opts.desc = "Open current file in mini.files"
+vimKeymap("n", "<leader>fe", function()
+	local path = vim.api.nvim_buf_get_name(0)
+	require("mini.files").open(path)
+end, opts)
+
+vimKeymap("n", "<leader>cu", function() require("core.utils").open_in_cursor() end,
+	{ desc = "Open in Cursor at current line" })
+
 nvimKeymap("n", "<leader>rw",
 	[[:let @/='\<'.expand('<cword>').'\>'<CR>:%s/<C-r>///g<Left><Left>]],
 	{ desc = "Rename word under cursor" })
@@ -98,6 +106,10 @@ vimKeymap("n", "<leader>ih", function()
 	end,
 	{ desc = "Toggle inlay hints" })
 
+
+-- ######################################################
+-- ####################### Splits #######################
+-- ######################################################
 
 opts.desc = "Open vertical split"
 vim.keymap.set("n", "<leader>sv", function() vim.cmd("vertical split") end, opts)
@@ -127,6 +139,10 @@ vimKeymap("n", "<C-Left>", function() vim.cmd("vertical resize -2") end, opts)
 opts.desc = "Resize right"
 vimKeymap("n", "<C-Right>", function() vim.cmd("vertical resize +2") end, opts)
 
+-- ######################################################
+-- ############### Centering / Searching ################
+-- ######################################################
+
 opts.desc = "Automatically centers when C-d"
 nvimKeymap("n", "<C-d>", "<C-d>zz", opts)
 opts.desc = "Automatically centers when C-u"
@@ -141,6 +157,7 @@ vim.keymap.set("n", "<C-y>", "<C-y>k", opts)
 opts.desc = "Center when searching"
 nvimKeymap("n", "n", "nzzzv", opts)
 nvimKeymap("n", "N", "Nzzzv", opts)
+-- nvimKeymap("c", "<CR>", "<CR>zz", opts)
 
 ----- File Navigation -----
 opts.desc = "Open Mini Files"

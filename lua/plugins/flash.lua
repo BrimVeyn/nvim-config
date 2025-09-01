@@ -16,6 +16,11 @@ return {
 				"<CR>",
 				mode = { "n" },
 				function()
+					--TODO: Restore default behavior in quickfix
+					if vim.bo.filetype == 'qf' then
+						return
+					end
+
 					local Flash = require("flash")
 
 					---@param opts Flash.Format

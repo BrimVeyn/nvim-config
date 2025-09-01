@@ -6,15 +6,68 @@ return {
 			{
 				"nvim-telescope/telescope-fzf-native.nvim",
 				build = "make",
-			}
+			},
+			{
+				"nvim-telescope/telescope-frecency.nvim",
+				-- install any compatible version of 0.9.x
+				version = "^0.9.0",
+			},
 		},
 
 		config = function()
 			local actions = require("telescope.actions")
 			local action_state = require("telescope.actions.state")
+			local git_root_cache = { git_root = "", cwd = vim.fn.getcwd() }
 
 			require('telescope').setup {
 				defaults = {
+
+					path_display = function(opts, path)
+						_ = opts
+						local tail = require("telescope.utils").path_tail(path)
+						local current_cwd = vim.fn.getcwd()
+
+						-- Retrigger git_root resolve on directory change
+						if git_root_cache.cwd ~= current_cwd then
+							git_root_cache = { git_root = "", cwd = current_cwd }
+						end
+
+						if git_root_cache.git_root == "" then
+							local handle = io.popen("git rev-parse --show-toplevel 2>/dev/null")
+							git_root_cache.git_root = handle and handle:read("*a"):gsub("%s+", "") or ""
+							---@diagnostic disable-next-line: need-check-nil
+							handle:close()
+						end
+
+						local git_root = git_root_cache.git_root
+						if git_root ~= "" and path:find(git_root, 1, true) then
+							path = path:gsub("^" .. vim.pesc(git_root), "~")
+						end
+
+						-- Remove the filename (last component after the last /)
+						path = path:gsub("/[^/]*$", "")
+
+						-- Truncate path if longer than 80 characters
+						local function truncate_path(p, max_len)
+							if #p <= max_len then return p end
+							local parts = {}
+							for part in p:gmatch("[^/]+/?") do
+								table.insert(parts, part)
+							end
+							while #parts > 1 and #table.concat(parts, "") > max_len do
+								table.remove(parts, 1)
+							end
+							return table.concat(parts, "")
+						end
+						path = truncate_path(path, 60)
+
+						return string.format("%s [%s]", tail, path)
+					end,
+					-- path_display = function(opts, path)
+					-- 	_ = opts
+					-- 	local tail = require("telescope.utils").path_tail(path)
+					-- 	return string.format("%s (%s)", tail, path)
+					-- end,
 					preview = {
 						filesize_limit = 0.1,
 					},
@@ -35,7 +88,9 @@ return {
 								if entry and entry.path then
 									MiniFiles.open(entry.path, false)
 								end
-							end
+							end,
+							["<C-k>"] = require('telescope.actions').cycle_history_next,
+							["<C-j>"] = require('telescope.actions').cycle_history_prev,
 						},
 						n = {
 							["d"] = require('telescope.actions').delete_buffer,
@@ -57,12 +112,16 @@ return {
 						override_file_sorter = true, -- override the file sorter
 						case_mode = "smart_case", -- or "ignore_case" or "respect_case"
 					},
+					frecency = {
+						matcher = "fuzzy",
+						show_filter_column = false,
+						enable_prompt_mappings = true,
+					}
 				}
 			}
-			-- To get fzf loaded and working with telescope, you need to call
-			-- load_extension, somewhere after setup function:
 			require('telescope').load_extension('fzf')
 			require('telescope').load_extension('pnpm')
+			require("telescope").load_extension "frecency"
 
 			local themes = require('telescope.themes')
 			local opts = { noremap = true, silent = true }
@@ -73,10 +132,19 @@ return {
 				}))
 			end, { noremap = true, silent = true })
 
-			opts.desc = "Fuzzy find files in project"
-			vim.keymap.set("n", "<leader>ff", function()
-				require('telescope.builtin').find_files()
-			end, opts)
+			vim.keymap.set("n", "<Leader>ff", function()
+				require("telescope").extensions.frecency.frecency(themes.get_ivy({
+					workspace = "CWD",
+				}))
+			end, { desc = "Telescope frecency" })
+
+			vim.keymap.set("n", "<leader>fk", function()
+				require("telescope.builtin").keymaps(themes.get_ivy())
+			end, { desc = "Telescope keymaps" })
+
+
+			opts.desc = "Fuzzy help tags"
+			vim.keymap.set("n", "<leader>fh", function() vim.cmd("Telescope help_tags") end, opts)
 
 			opts.desc = "Fuzzy find in project"
 			vim.keymap.set("n", "<leader>fw", function() vim.cmd("Telescope live_grep") end, opts)

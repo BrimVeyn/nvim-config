@@ -5,11 +5,11 @@ return {
 		event = "VeryLazy",
 		keys = {
 			{
-				"<leader>uN",
+				"<leader>ic",
 				function()
 					require("incline").toggle()
 				end,
-				desc = "Incline Toggle",
+				desc = "Toggle incline (status line that shows buffer name)",
 			},
 		},
 		opts = function()
@@ -43,26 +43,26 @@ return {
 						return render_result
 					end
 					return #filename > 0
-						and {
-							{
-								"", -- vim.g.separators.section.right
-								group = "InclineBorder" .. group,
-							},
-							expand({
+							and {
 								{
-									ft_icon and { " ", ft_icon, guifg = ft_color } or "",
-									" ",
-									{
-										filename,
-										gui = modified and "bold" or nil,
-									},
-									" ",
-									modified and "● " or "",
+									"", -- vim.g.separators.section.right
+									group = "InclineBorder" .. group,
 								},
-								group = "InclineText" .. group,
-							}),
-						}
-						or {}
+								expand({
+									{
+										ft_icon and { " ", ft_icon, guifg = ft_color } or "",
+										" ",
+										{
+											filename,
+											gui = modified and "bold" or nil,
+										},
+										" ",
+										modified and "● " or "",
+									},
+									group = "InclineText" .. group,
+								}),
+							}
+							or {}
 				end,
 				highlight = {
 					groups = {

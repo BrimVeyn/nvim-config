@@ -100,4 +100,59 @@ function M.bufferLineCloseManyPick()
 	end
 end
 
+-- Function to open URL in browser based on OS
+local function open_url_in_browser(url)
+	local platform = vim.loop.os_uname().sysname
+
+	if platform == "Darwin" then
+		-- macOS
+		os.execute('open "' .. url .. '"')
+	elseif platform == "Linux" then
+		-- Linux
+		os.execute('xdg-open "' .. url .. '"')
+	elseif platform == "Windows_NT" then
+		-- Windows
+		os.execute('start "" "' .. url .. '"')
+	else
+		print("Unsupported platform: " .. platform)
+		return false
+	end
+
+	return true
+end
+
+-- Function to open the current file in Cursor at the current line
+function M.open_in_cursor()
+	local file_path = vim.fn.expand("%:p")
+	local line_number = vim.fn.line(".")
+	local workspace_dir = "/Users/galadrim/Projects/ansut"
+
+	-- First: Open the folder via URL scheme
+	local folder_url = "cursor://file/" .. workspace_dir .. "?windowId=_blank"
+
+	vim.notify("Opening folder: " .. folder_url, vim.log.levels.INFO)
+
+	-- Open the folder first
+	if open_url_in_browser(folder_url) then
+		-- Wait a bit for Cursor to load, then open the specific file
+		vim.defer_fn(function()
+			-- Now use CLI to open the specific file at the right line
+			local cmd = string.format('cursor --goto "%s:%s"', file_path, line_number)
+
+			vim.notify("Running command: " .. cmd, vim.log.levels.INFO)
+
+			-- Execute the command
+			local result = vim.fn.system(cmd)
+
+			if vim.v.shell_error == 0 then
+				vim.notify("Opened file in Cursor", vim.log.levels.INFO)
+			else
+				vim.notify("Failed to open file (cmd: " .. cmd .. ")", vim.log.levels.ERROR)
+			end
+		end, 1000) -- 1000ms delay to let Cursor open
+	else
+		vim.notify("Failed to open folder in Cursor", vim.log.levels.ERROR)
+	end
+end
+
 return M

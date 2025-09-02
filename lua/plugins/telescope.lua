@@ -113,6 +113,9 @@ return {
 
 			opts.desc = "Fuzzy find document symbols (LSP)"
 			vim.keymap.set("n", "<leader>fd", function() vim.cmd("Telescope lsp_document_symbols") end, opts)
+
+			opts.desc = "Fuzzy find keymaps"
+			vim.keymap.set("n", "<leader>fk", function() vim.cmd("Telescope keymaps") end, opts)
 		end,
 	},
 }

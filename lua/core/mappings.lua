@@ -243,23 +243,14 @@ vimKeymap("n", "<leader>fa",
 	end, { desc = "Fix all auto-fixable problems" })
 
 
-
 function M.lspconfig(ev)
 	opts = { buffer = ev.buf }
-	-- opts.desc = "LSP goto definition"
-	-- vimKeymap("n", "gd", vim.lsp.buf.definition, opts)
 	opts.desc = "LSP goto declaration"
 	vimKeymap("n", "gD", vim.lsp.buf.declaration, opts)
 	opts.desc = "LSP goto implementation"
 	vimKeymap("n", "gi", vim.lsp.buf.implementation, opts)
 	opts.desc = "LSP rename word under cursor"
 	vimKeymap("n", "<leader>rn", vim.lsp.buf.rename, opts)
-	-- opts.desc = "LSP CodeAction"
-	-- vimKeymap("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-	-- opts.desc = "LSP diagnostic prev"
-	-- vimKeymap("n", "[d", vim.diagnostic.goto_prev, opts)
-	-- opts.desc = "LSP diagnostic next"
-	-- vimKeymap("n", "]d", vim.diagnostic.goto_next, opts)
 end
 
 function M.wkgroups()

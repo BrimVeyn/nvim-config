@@ -78,11 +78,12 @@ return {
 					-- 	end,
 					-- 	desc = "Find document symbols"
 					-- },
+					{ "<leader>fr",     function() Snacks.picker.lsp_references() end, desc = "Find lsp references" },
 					{ "<leader>fz",     function() Snacks.picker.grep_buffers() end,   desc = "Find in active buffers (live grep)" },
 					{ "<leader>fh",     function() Snacks.picker.help() end,           desc = "Find help pages" },
 					{ "<leader>fp",     function() Snacks.picker.picker_layouts() end, desc = "Find help pages" },
-					{ "<leader>fs",     function() vim.cmd("Autosession search") end,  desc = "Find sessions" },
-					{ "<leader>fS",     function() vim.cmd("Autosession delete") end,  desc = "Find sessions" },
+					{ "<leader>fs",     function() vim.cmd("Autosession search") end,  desc = "Find sessions (browse)" },
+					{ "<leader>fS",     function() vim.cmd("Autosession delete") end,  desc = "Find sessions (delete)" },
 					-- { "<leader>fe",     function() Snacks.picker.explorer() end,      desc = "Find sessions" },
 				}
 			},

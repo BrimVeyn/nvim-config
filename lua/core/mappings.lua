@@ -233,6 +233,13 @@ vimKeymap("n", "<leader>oi",
 		end
 	end, { desc = "Organize imports" })
 
+vimKeymap("n", "<leader>ru",
+	function()
+		if vim.bo.filetype == "typescriptreact" or vim.bo.filetype == "typescript" then
+			vim.cmd("TSToolsRemoveUnused");
+		end
+	end, { desc = "Removed unsused imports/variables" })
+
 vimKeymap("n", "<leader>fa",
 	function()
 		if vim.bo.filetype == "typescriptreact" or vim.bo.filetype == "typescript" then
@@ -276,11 +283,9 @@ function M.cmp_native(cmp, luasnip)
 		["<C-f>"] = cmp.mapping.scroll_docs(4), -- Move docs down
 		['<CR>'] = cmp.mapping(function(fallback)
 			if cmp.visible() then
-				if luasnip.expandable() then
-					luasnip.expand()
-				else
-					cmp.confirm({ select = true, })
-				end
+				cmp.confirm({ select = true })
+			elseif luasnip.expandable() then
+				luasnip.expand()
 			else
 				fallback()
 			end

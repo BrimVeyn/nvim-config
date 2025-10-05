@@ -2,7 +2,8 @@ return {
 	"neovim/nvim-lspconfig",
 	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
-		"hrsh7th/cmp-nvim-lsp",
+		"saghen/blink.cmp",
+		"williamboman/mason-lspconfig.nvim",
 		"artemave/workspace-diagnostics.nvim",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
 		{ "folke/neodev.nvim",                   opts = {}, },
@@ -20,9 +21,7 @@ return {
 		}
 	},
 	config = function()
-		local lspconfig = require("lspconfig")
 		local mason_lspconfig = require("mason-lspconfig")
-		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 		local mappings = require("core.mappings")
 
 		vim.api.nvim_create_autocmd("LspAttach", {
@@ -32,7 +31,7 @@ return {
 			end,
 		})
 
-		local capabilities = cmp_nvim_lsp.default_capabilities()
+		local capabilities = require('blink.cmp').get_lsp_capabilities()
 
 		-- Setup mason-lspconfig
 		local uname = vim.loop.os_uname()
@@ -62,24 +61,12 @@ return {
 		end
 
 		mason_lspconfig.setup({
-			automatic_installation = true,
 			ensure_installed = servers
 		})
 
-		mason_lspconfig.setup_handlers({
-			function(server_name)
-				lspconfig[server_name].setup({
-					capabilities = capabilities,
-				})
-			end,
-		})
-
-		vim.g.zig_fmt_parse_errors = 0
-		vim.g.zig_fmt_autosave = 0
-
-		if uname.machine == "aarch64" then
-			lspconfig["clangd"].setup({
-				cmd = { "/home/bvan-pae/Downloads/clang+llvm-19.1.0-aarch64-linux-gnu/bin/clangd" },
+		-- Configure servers using vim.lsp.config
+		for _, server_name in ipairs(servers) do
+			vim.lsp.config(server_name, {
 				capabilities = capabilities,
 			})
 		end

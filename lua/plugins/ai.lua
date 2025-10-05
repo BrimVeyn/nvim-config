@@ -82,8 +82,8 @@ return {
 					{ "<leader>fz",     function() Snacks.picker.grep_buffers() end,   desc = "Find in active buffers (live grep)" },
 					{ "<leader>fh",     function() Snacks.picker.help() end,           desc = "Find help pages" },
 					{ "<leader>fp",     function() Snacks.picker.picker_layouts() end, desc = "Find help pages" },
-					{ "<leader>fs",     function() vim.cmd("Autosession search") end,  desc = "Find sessions (browse)" },
-					{ "<leader>fS",     function() vim.cmd("Autosession delete") end,  desc = "Find sessions (delete)" },
+					{ "<leader>fs",     function() vim.cmd("AutoSession search") end,  desc = "Find sessions (browse)" },
+					{ "<leader>fS",     function() vim.cmd("AutoSession delete") end,  desc = "Find sessions (delete)" },
 					-- { "<leader>fe",     function() Snacks.picker.explorer() end,      desc = "Find sessions" },
 				}
 			},
@@ -108,42 +108,6 @@ return {
 			{ '<leader>oe', function() require('opencode').prompt("Explain @cursor and its context") end, desc = "Explain code near cursor", },
 		},
 	},
-	-- {
-	-- 	"copilotlsp-nvim/copilot-lsp",
-	-- 	dependencies = {
-	-- 		"github/copilot.vim"
-	-- 	},
-	-- 	init = function()
-	-- 		vim.g.copilot_nes_debounce = 100
-	-- 		vim.lsp.enable("copilot_ls")
-	-- 		vim.keymap.set("n", "<C-w>", function()
-	-- 			local bufnr = vim.api.nvim_get_current_buf()
-	-- 			local state = vim.b[bufnr].nes_state
-	-- 			if state then
-	-- 				-- Try to jump to the start of the suggestion edit.
-	-- 				-- If already at the start, then apply the pending suggestion and jump to the end of the edit.
-	-- 				local _ = require("copilot-lsp.nes").walk_cursor_start_edit()
-	-- 						or (
-	-- 							require("copilot-lsp.nes").apply_pending_nes()
-	-- 							and require("copilot-lsp.nes").walk_cursor_end_edit()
-	-- 						)
-	-- 				return nil
-	-- 			else
-	-- 				-- Resolving the terminal's inability to distinguish between `TAB` and `<C-i>` in normal mode
-	-- 				return "<C-i>"
-	-- 			end
-	-- 		end, { desc = "Accept Copilot NES suggestion", expr = true })
-	-- 	end,
-	-- 	config = function()
-	-- 		require('copilot-lsp').setup({
-	-- 			---@diagnostic disable-next-line: missing-fields
-	-- 			nes = {
-	-- 				distance_threshold = 100,
-	-- 				move_count_threshold = 3, -- Clear after 3 cursor movements
-	-- 			}
-	-- 		})
-	-- 	end
-	-- },
 	{
 		"supermaven-inc/supermaven-nvim",
 		config = function()

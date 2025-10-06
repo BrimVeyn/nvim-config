@@ -30,10 +30,10 @@ return {
 				border = 'rounded',
 				draw = {
 					columns = {
-						{ "label",       "label_description", gap = 1 },
-						{ "kind_icon",   gap = 1 },
-						{ "kind",        gap = 1 },
-						{ "source_name", gap = 1 },
+						{ "label",      "label_description", gap = 1 },
+						{ "kind_icon",  gap = 1 },
+						{ "kind",       gap = 1 },
+						{ "source_name" },
 					},
 					components = {
 						kind_icon = {
@@ -62,7 +62,7 @@ return {
 							text = function(ctx)
 								if ctx.source_name == 'LSP' or ctx.source_name == 'lsp' then
 									local shortnames = {
-										["emmmet_language_server"] = "Emmet",
+										["emmet_language_server"] = "Emmet",
 										["typescript-tools"] = "TS",
 										["lua_ls"] = "Lua",
 										["pyright"] = "Py",
@@ -105,7 +105,7 @@ return {
 		},
 
 		cmdline = {
-			keymap = { preset = 'inherit' },
+			keymap = { preset = 'cmdline' },
 			completion = { menu = { auto_show = true } },
 		},
 	},

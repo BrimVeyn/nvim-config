@@ -39,12 +39,12 @@ return {
 						kind_icon = {
 							text = function(ctx)
 								if vim.tbl_contains({ "Path" }, ctx.source_name) then
-									local mini_icon, _ = require("mini.icons").get_icon(ctx.item.data.type, ctx.label)
-									if mini_icon then return mini_icon .. ctx.icon_gap end
+									local ok, mini_icon = pcall(require("mini.icons").get_icon, ctx.item.data.type, ctx.label)
+									if ok and mini_icon then return mini_icon .. ctx.icon_gap end
 								end
 
 								local icon = require("lspkind").symbolic(ctx.kind, { mode = "symbol" })
-								return icon .. ctx.icon_gap
+								return (icon or '') .. ctx.icon_gap
 							end,
 
 							-- Optionally, use the highlight groups from mini.icons
@@ -52,8 +52,8 @@ return {
 							-- keep the highlight groups in sync with the icons.
 							highlight = function(ctx)
 								if vim.tbl_contains({ "Path" }, ctx.source_name) then
-									local mini_icon, mini_hl = require("mini.icons").get_icon(ctx.item.data.type, ctx.label)
-									if mini_icon then return mini_hl end
+									local ok, mini_icon, mini_hl = pcall(require("mini.icons").get_icon, ctx.item.data.type, ctx.label)
+									if ok and mini_icon then return mini_hl end
 								end
 								return ctx.kind_hl
 							end,
@@ -61,9 +61,19 @@ return {
 						source_name = {
 							text = function(ctx)
 								if ctx.source_name == 'LSP' or ctx.source_name == 'lsp' then
-									return ctx.item.client_name
+									local shortnames = {
+										["emmmet_language_server"] = "Emmet",
+										["typescript-tools"] = "TS",
+										["lua_ls"] = "Lua",
+										["pyright"] = "Py",
+										["rust_analyzer"] = "Rust",
+										["gopls"] = "Go",
+									}
+									local client_name = ctx.item.client_name
+									local short = shortnames[client_name] or client_name
+									return '[' .. short .. ']'
 								else
-									return ctx.source_name
+									return '[' .. ctx.source_name .. ']'
 								end
 							end,
 						},
@@ -95,10 +105,8 @@ return {
 		},
 
 		cmdline = {
-			scmdline = {
-				keymap = { preset = 'inherit' },
-				completion = { menu = { auto_show = true } },
-			},
+			keymap = { preset = 'inherit' },
+			completion = { menu = { auto_show = true } },
 		},
 	},
 	config = function(_, opts)

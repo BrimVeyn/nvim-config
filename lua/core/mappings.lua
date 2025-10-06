@@ -41,7 +41,7 @@ vimKeymap('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
 
 
 opts.desc = "Classic save"
-vimKeymap("n", "<C-s>", function() vim.cmd("w") end, opts)
+vimKeymap("n", "<C-s>", function() vim.cmd("update") end, opts)
 opts.desc = "Clear search highlight"
 vimKeymap("n", "<ESC>", function() vim.cmd("nohlsearch") end, opts)
 
@@ -245,7 +245,10 @@ vimKeymap("n", "<leader>fa",
 		if vim.bo.filetype == "typescriptreact" or vim.bo.filetype == "typescript" then
 			vim.cmd("TSToolsFixAll");
 			vim.wait(100);
-			vim.cmd("EslintFixAll");
+			vim.lsp.buf.code_action({ context = { only = { "source.fixAll.eslint" } }, apply = true });
+			vim.wait(100);
+			vim.fn.system("pnpm oxlint --fix " .. vim.fn.expand("%"));
+			vim.cmd("e!");
 		end
 	end, { desc = "Fix all auto-fixable problems" })
 
@@ -275,7 +278,5 @@ function M.wkgroups()
 		{ "<leader>p", group = "SwapPrev", icon = "⇄" },
 	})
 end
-
-
 
 return M

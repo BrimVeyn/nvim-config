@@ -125,7 +125,7 @@ end
 function M.open_in_cursor()
 	local file_path = vim.fn.expand("%:p")
 	local line_number = vim.fn.line(".")
-	local workspace_dir = "/Users/galadrim/Projects/perso/FormMaker"
+	local workspace_dir = "/Users/galadrim/Projects/trouve-ton-loc"
 
 	-- First: Open the folder via URL scheme
 	local folder_url = "cursor://file/" .. workspace_dir .. "?windowId=_blank"

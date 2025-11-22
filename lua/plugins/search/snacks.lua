@@ -3,6 +3,7 @@ return {
 	opts = {
 		input = { enabled = true },
 		rename = { enabled = true },
+		terminal = { enabled = true },
 		picker = {
 			win = {
 				input = {

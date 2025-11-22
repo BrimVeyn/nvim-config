@@ -12,6 +12,7 @@ return {
 		'echasnovski/mini.icons',
 		"rafamadriz/friendly-snippets",
 		'windwp/nvim-autopairs',
+		"xzbdmw/colorful-menu.nvim",
 	},
 	opts = {
 		keymap = {
@@ -29,55 +30,19 @@ return {
 			menu = {
 				border = 'rounded',
 				draw = {
-					columns = {
-						{ "label",      "label_description", gap = 1 },
-						{ "kind_icon",  gap = 1 },
-						{ "kind",       gap = 1 },
-						{ "source_name" },
-					},
+					-- We don't need label_description now because label and label_description are already
+					-- combined together in label by colorful-menu.nvim.
+					columns = { { "kind_icon" }, { "label", gap = 1 }, { "kind" } },
 					components = {
-						kind_icon = {
+						label = {
 							text = function(ctx)
-								if vim.tbl_contains({ "Path" }, ctx.source_name) then
-									local ok, mini_icon = pcall(require("mini.icons").get_icon, ctx.item.data.type, ctx.label)
-									if ok and mini_icon then return mini_icon .. ctx.icon_gap end
-								end
-
-								local icon = require("lspkind").symbolic(ctx.kind, { mode = "symbol" })
-								return (icon or '') .. ctx.icon_gap
+								return require("colorful-menu").blink_components_text(ctx)
 							end,
-
-							-- Optionally, use the highlight groups from mini.icons
-							-- You can also add the same function for `kind.highlight` if you want to
-							-- keep the highlight groups in sync with the icons.
 							highlight = function(ctx)
-								if vim.tbl_contains({ "Path" }, ctx.source_name) then
-									local ok, mini_icon, mini_hl = pcall(require("mini.icons").get_icon, ctx.item.data.type, ctx.label)
-									if ok and mini_icon then return mini_hl end
-								end
-								return ctx.kind_hl
+								return require("colorful-menu").blink_components_highlight(ctx)
 							end,
 						},
-						source_name = {
-							text = function(ctx)
-								if ctx.source_name == 'LSP' or ctx.source_name == 'lsp' then
-									local shortnames = {
-										["emmet_language_server"] = "Emmet",
-										["typescript-tools"] = "TS",
-										["lua_ls"] = "Lua",
-										["pyright"] = "Py",
-										["rust_analyzer"] = "Rust",
-										["gopls"] = "Go",
-									}
-									local client_name = ctx.item.client_name
-									local short = shortnames[client_name] or client_name
-									return '[' .. short .. ']'
-								else
-									return '[' .. ctx.source_name .. ']'
-								end
-							end,
-						},
-					}
+					},
 				}
 			},
 			documentation = {
@@ -94,12 +59,12 @@ return {
 			auto_brackets = { enabled = true },
 		},
 
-		-- signature = {
-		-- 	enabled = true,
-		-- 	window = {
-		-- 		show_documentation = false,
-		-- 	},
-		-- },
+		signature = {
+			enabled = true,
+			window = {
+				show_documentation = false,
+			},
+		},
 
 
 		snippets = { preset = 'luasnip' },

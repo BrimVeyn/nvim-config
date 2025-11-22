@@ -21,13 +21,26 @@ vim.opt.rtp:prepend(lazypath)
 -- Setup lazy.nvim
 require("lazy").setup({
 	spec = {
-		{ import = "core.colorscheme" }, { import = "plugins" }
+		{ import = "core.colorscheme" },
+		{ import = "plugins.ai" },
+		{ import = "plugins.coding" },
+		{ import = "plugins.diagnostics" },
+		{ import = "plugins.editor" },
+		{ import = "plugins.git" },
+		{ import = "plugins.lsp" },
+		{ import = "plugins.search" },
+		{ import = "plugins.session" },
+		{ import = "plugins.syntax" },
+		{ import = "plugins.terminal" },
+		{ import = "plugins.testing" },
+		{ import = "plugins.ui" },
+		{ import = "plugins.util" },
 	},
 	install = { colorscheme = { "tokyonight" } },
 	checker = { enabled = true, notify = false },
 	change_detection = { enabled = true, notify = false, },
 })
 
-require("core.mappings").wkgroups()
+require("core.keymaps").wkgroups()
 
 

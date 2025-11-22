@@ -12,7 +12,7 @@ return {
 		},
 		config = function()
 			local mason_lspconfig = require("mason-lspconfig")
-			local mappings = require("core.mappings")
+			local mappings = require("core.keymaps")
 
 			vim.api.nvim_create_autocmd("LspAttach", {
 				group = vim.api.nvim_create_augroup("UserLspConfig", {}),

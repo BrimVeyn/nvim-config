@@ -8,6 +8,20 @@ vimKeymap("n", "<leader>ih", function()
 	end,
 	{ desc = "Toggle inlay hints" })
 
+-- Go to defintion in vertical split
+vimKeymap("n", "<localleader>vd", function()
+		vim.cmd("vs")
+		vim.lsp.buf.definition()
+	end,
+	{ desc = "Go to definition in vertical split" })
+
+-- Go to defintion in horizontal split
+vimKeymap("n", "<localleader>sd", function()
+		vim.cmd("sp")
+		vim.lsp.buf.definition()
+	end,
+	{ desc = "Go to definition in horizontal split" })
+
 -- TypeScript tools
 vimKeymap("n", "<leader>ai",
 	function()

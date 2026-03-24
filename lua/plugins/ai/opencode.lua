@@ -17,11 +17,15 @@ return {
 		},
 	},
 	config = function()
+		---@type opencode.Opts
 		vim.g.opencode_opts = {
 			provider = {
 				enabled = "snacks", -- Default if `snacks.terminal` is available and enabled.
 				snacks = {
-					-- Customize `snacks.terminal` to your liking.
+					win = {
+						position = "right",
+						width = 0.45,
+					},
 				}
 			}
 		}

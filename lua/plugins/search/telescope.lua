@@ -109,7 +109,7 @@ return {
 				require('telescope').extensions.pnpm.workspace(themes.get_ivy({
 					initial_mode = "normal",
 				}))
-			end, { noremap = true, silent = true })
+			end, { noremap = true, silent = true, desc = "Find pnpm workspaces" })
 
 			opts.desc = "Fuzzy find document symbols (LSP)"
 			vim.keymap.set("n", "<leader>fd", function() vim.cmd("Telescope lsp_document_symbols") end, opts)
